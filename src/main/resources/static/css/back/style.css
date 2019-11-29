@@ -1,0 +1,24 @@
+/* listCategory */
+#workarea {
+	margin: 40px;
+}
+
+#workarea thead td {
+	font-weight: bold;
+}
+
+#title {
+	margin: 0 0 20px 0;
+}
+
+/* adminNavigator */
+#tmallIcon {
+	float: left;
+	height: 45px;
+	margin-right: 15px;
+}
+
+.navbar-brand {
+	margin: 0 15px;
+	cursor: pointer;
+}
