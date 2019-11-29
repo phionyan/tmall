@@ -6,7 +6,8 @@
 	<script>
 		$(function() {
 			var data4vue = {
-				uri : 'categories',
+				/* uri : 'categories', */
+				uri : 'test',
 				beans : []
 			};
 			var vm = new Vue({
@@ -19,7 +20,9 @@
 					list : function() {
 						var url = this.uri;
 						axios.get(url).then(function(response) {
-							vm.beans = response.data;
+							//alert(response.data.content);
+							vm.beans = response.data.content;
+							alert(response.data.totalPages);
 						});
 					}
 				}

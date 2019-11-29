@@ -1,0 +1,30 @@
+<div id="pageDiv" th:fragment="html">
+	<nav aria-label="Page navigation">
+		<ul class="pagination pagination-lg">
+			<li :class="{ disabled: pagination.first }"><a href="#nowhere"
+				@click="jump('first')"> <span>&laquo;</span>
+			</a></li>
+			<li :class="{ disabled: !pagination.hasPrevious }"><a
+				href="#nowhere" @click="jump('pre')"> &lsaquo; </a></li>
+			<li v-for="i in pagination.navigatepageNums"><a href="#nowhere"
+				@click="jumpByNumber(i-1)"> {{i}} </a></li>
+			<li>
+			<li :class="{ disabled: !pagination.hasNext }"><a
+				href="#nowhere" @click="jump('next')"> &rsaquo; </a></li>
+
+			<li :class="{ disabled: pagination.last }"><a href="#nowhere"
+				@click="jump('last')"> <span>&raquo;</span>
+			</a></li>
+			<div class="input-group step-group">
+				<input v-model:value="stepNum" type="number" id="stepInput"
+					class="form-control" placeholder="页码">
+				<button class="btn btn-default" @click="jumpByNumber(stepNum)"
+					style="margin-left: 5px;" type="button">Go</button>
+			</div>
+
+		</ul>
+
+	</nav>
+
+
+</div>

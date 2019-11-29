@@ -22,3 +22,16 @@
 	margin: 0 15px;
 	cursor: pointer;
 }
+
+/* adminPage */
+#pageDiv {
+	text-align: center;
+}
+
+#stepInput {
+	width: 80px;
+}
+
+.step-group {
+	margin: 0 auto;
+}
