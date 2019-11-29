@@ -6,25 +6,32 @@
 	<script>
 		$(function() {
 			var data4vue = {
-				/* uri : 'categories', */
-				uri : 'test',
-				beans : []
+				uri:'categories',
+				beans:[],
+				pagination:{},
+				stepNum:1
 			};
 			var vm = new Vue({
 				el : '#workarea',
 				data : data4vue,
 				mounted : function() {
-					this.list();
+					this.list(0);
 				},
 				methods : {
-					list : function() {
-						var url = this.uri;
+					list:function(start){
+						var url = this.uri+"?start="+(start);
 						axios.get(url).then(function(response) {
-							//alert(response.data.content);
 							vm.beans = response.data.content;
-							alert(response.data.totalPages);
+							vm.pagination = response.data;
+							//alert(vm.beans[0].name);
 						});
-					}
+					},
+					jump: function(page){
+	                    jump(page,vm); //定义在adminHeader.html 中
+	                },
+	                jumpByNumber: function(start){
+	                    jumpByNumber(start,vm);
+	                },
 				}
 			});
 		});
@@ -60,6 +67,8 @@
 				</tr>
 			</tbody>
 		</table>
+		
+	<div th:replace="include/admin/adminPage::html"></div>
 	</div>
 </body>
 </html>
