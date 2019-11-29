@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>框架搭好啦</title>
+		<script src="js/jquery/2.0.0/jquery.min.js"></script>
+		<link href="css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
+		<script src="js/bootstrap/3.3.6/bootstrap.min.js"></script>
+		<script src="js/axios/0.17.1/axios.min.js"></script>
+		<script src="js/vue/2.5.16/vue.min.js"></script>
+		<script>
+		 $(function(){
+			var data4vue = {
+				uri:'categories',
+				beans:[]
+			};
+			var vm = new Vue({
+				el:'#workarea',
+				data:data4vue,
+				mounted:function(){ 
+					this.list();
+				},
+				methods:{
+					list:function(){
+						var url = this.uri;
+						axios.get(url).then(function(response) {
+							vm.beans = response.data;
+						});
+					}
+				}
+			});
+		 });
+		</script>
+		
+		
+		<style>
+			#workarea {
+				margin: 40px;
+			}
+
+			#workarea thead td {
+				font-weight: bold;
+			}
+
+			#title {
+				margin: 0 0 20px 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="workarea">
+
+			<div class="label label-info">
+				分类管理
+			</div>
+			<br />
+			<br />
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr class="success">
+						<td>ID</td>
+						<td>分类名称</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="bean in beans" class="active">
+						<td>
+							{{bean.id}}
+						</td>
+						<td>
+							{{bean.name}}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>
