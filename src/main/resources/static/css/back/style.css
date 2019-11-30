@@ -35,3 +35,16 @@
 .step-group {
 	margin: 0 auto;
 }
+
+
+/*--------------------------------  */
+/* addModal */
+.addTable{
+	border-collapse:separate; 
+	border-spacing:0px 10px;
+}
+.addCateBt{
+	float:right;
+	margin-right: 15px;
+}
+/*--------------------------------  */

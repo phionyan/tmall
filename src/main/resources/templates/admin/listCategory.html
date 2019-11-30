@@ -6,10 +6,12 @@
 	<script>
 		$(function() {
 			var data4vue = {
-				uri:'categories',
-				beans:[],
-				pagination:{},
-				stepNum:1
+				uri : 'categories',
+				beans : [],
+				pagination : {},
+				stepNum : 1,
+				bean:{id:0,name:''},
+				file:null,
 			};
 			var vm = new Vue({
 				el : '#workarea',
@@ -18,20 +20,53 @@
 					this.list(0);
 				},
 				methods : {
-					list:function(start){
-						var url = this.uri+"?start="+(start);
+					list : function(start) {
+						var url = this.uri + "?start=" + (start);
 						axios.get(url).then(function(response) {
 							vm.beans = response.data.content;
 							vm.pagination = response.data;
 							//alert(vm.beans[0].name);
 						});
 					},
-					jump: function(page){
-	                    jump(page,vm); //定义在adminHeader.html 中
+					jump : function(page) {
+						jump(page, vm); //定义在adminHeader.html 中
+					},
+					jumpByNumber : function(start) {
+						jumpByNumber(start, vm);
+					},
+					add: function () {
+	                    if(!checkEmpty(this.bean.name, "分类名称"))
+	                        return;
+	                    if(!checkEmpty(this.file, "分类图片"))
+	                        return;
+	                    var url = this.uri;
+
+	                    //axios.js 上传文件要用 formData 这种方式
+	                    var formData = new FormData();
+	                    formData.append("image", this.file);
+	                    formData.append("name", this.bean.name);
+	                    axios.post(url,formData).then(function(response){
+	                        vm.list(0);
+	                        vm.bean = { id: 0, name: ''};
+	                        $("#categoryImg").val('');
+	                        vm.file = null;
+	                    });
+	                    return true;
 	                },
-	                jumpByNumber: function(start){
-	                    jumpByNumber(start,vm);
+	                getFile: function (event) {
+	                    this.file = event.target.files[0];
 	                },
+	                toggleModal:function(){
+	                	$("#addCatModal").modal('toggle');
+	                },
+	                submit:function(){
+	                	if(vm.add()){
+	                		vm.toggleModal();
+	                		alert("提交成功！");
+	                	}else{
+	                		//alert("提交失败！");                		
+	                	}
+	                }
 				}
 			});
 		});
@@ -39,6 +74,8 @@
 	<div id="workarea">
 		<br /> <br />
 		<div class="label label-info">分类管理</div>
+		<button type="button"  class="btn btn-primary addCateBt" @click="toggleModal">
+			添加分类</button>
 		<br /> <br />
 		<table class="table table-hover table-bordered">
 			<thead>
@@ -67,8 +104,40 @@
 				</tr>
 			</tbody>
 		</table>
-		
-	<div th:replace="include/admin/adminPage::html"></div>
+
+		<div class="modal fade" id="addCatModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button data-dismiss="modal" class="close" type="button">
+							<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+						</button>
+						<h4 class="modal-title">添加分类</h4>
+					</div>
+					<div class="modal-body">
+						<table class="addTable">
+							<tr>
+								<td>分类名称</td>
+								<td><input @keyup.enter="add" v-model.trim="bean.name"
+									type="text" class="form-control"></td>
+							</tr>
+							<tr>
+								<td>分类图片</td>
+								<td><input id="categoryImg" accept="image/*" type="file"
+									name="image" @change="getFile($event)" /></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button data-dismiss="modal" class="btn btn-default" type="button">关闭</button>
+					<button class="btn btn-primary" @click="submit" type="button">提交</button>
+				</div>
+			</div>
+		</div>
+
+		<div th:replace="include/admin/adminPage::html"></div>
 	</div>
 </body>
 </html>
