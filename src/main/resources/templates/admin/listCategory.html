@@ -12,6 +12,7 @@
 				stepNum : 1,
 				bean:{id:0,name:''},
 				file:null,
+				type:"添加分类"
 			};
 			var vm = new Vue({
 				el : '#workarea',
@@ -47,25 +48,72 @@
 	                    formData.append("name", this.bean.name);
 	                    axios.post(url,formData).then(function(response){
 	                        vm.list(0);
-	                        vm.bean = { id: 0, name: ''};
-	                        $("#categoryImg").val('');
-	                        vm.file = null;
+							vm.resetModal();
+	                    });
+	                    return true;
+	                },
+	                delete_: function () {//delete是关键字
+	                    if(!checkDeleteLink())//校验放入公共代码区
+	                        return;
+	                    var url = this.uri;
+	                    axios.delete(url).then(function(response){
+	                        if(0!=response.data.length){
+	                            alert(response.data);
+	                        }
+	                        else{
+	                            vm.list(0);
+	                        }
+	                    });
+	                },
+	                edit:function(id){
+	                	if(!checkEmpty(this.bean.name, "分类名称"))
+		                    return;
+	                    var url = this.uri+"/"+id;
+
+	                    //axios.js 上传文件要用 formData 这种方式
+	                    var formData = new FormData();
+	                    formData.append("image", this.file);
+	                    formData.append("name", this.bean.name);
+	                    axios.put(url,formData).then(function(response){
+	                        vm.list(0);
+							vm.resetModal();
 	                    });
 	                    return true;
 	                },
 	                getFile: function (event) {
 	                    this.file = event.target.files[0];
 	                },
+	                editModal:function(name,id){
+	                	vm.bean.name=name;
+	                	vm.bean.id = id;
+	                	vm.type="编辑分类";
+	                	vm.toggleModal();
+	                },
 	                toggleModal:function(){
 	                	$("#addCatModal").modal('toggle');
 	                },
-	                submit:function(){
-	                	if(vm.add()){
-	                		vm.toggleModal();
-	                		alert("提交成功！");
-	                	}else{
-	                		//alert("提交失败！");                		
-	                	}
+	                submit:function(id){
+						if(id==0){
+		                	if(vm.add()){
+		                		vm.toggleModal();
+		                		alert("提交成功！");
+		                	}else{
+		                		alert("提交失败")
+		                	}
+						}else {
+							if(vm.edit(id)){
+								vm.toggleModal();
+		                		alert("提交成功！");
+							}else{
+		                		alert("提交失败")
+		                	}
+						}
+	                },
+	                resetModal:function(){
+	                	vm.type="添加分类";
+	                	vm.bean = { id: 0, name: ''};
+	                	$("#categoryImg").val('');
+	                	vm.file = null;
 	                }
 				}
 			});
@@ -74,7 +122,7 @@
 	<div id="workarea">
 		<br /> <br />
 		<div class="label label-info">分类管理</div>
-		<button type="button"  class="btn btn-primary addCateBt" @click="toggleModal">
+		<button type="button"  class="btn btn-primary addCateBt" @click="toggleModal()">
 			添加分类</button>
 		<br /> <br />
 		<table class="table table-hover table-bordered">
@@ -99,8 +147,8 @@
 					</td>
 					<td><a><span class="glyphicon glyphicon-shopping-cart"></span>
 					</a></td>
-					<td><a><span class="glyphicon glyphicon-edit"></span> </a></td>
-					<td><a><span class="glyphicon glyphicon-trash"></span> </a></td>
+					<td><a><span @click="editModal(bean.name,bean.id)" class="glyphicon glyphicon-edit"></span> </a></td>
+					<td><a><span @click="delete_(bean.id)" class="glyphicon glyphicon-trash"></span> </a></td>
 				</tr>
 			</tbody>
 		</table>
@@ -113,13 +161,13 @@
 						<button data-dismiss="modal" class="close" type="button">
 							<span aria-hidden="true">×</span><span class="sr-only">Close</span>
 						</button>
-						<h4 class="modal-title">添加分类</h4>
+						<h4 class="modal-title">{{type}}</h4>
 					</div>
 					<div class="modal-body">
 						<table class="addTable">
 							<tr>
 								<td>分类名称</td>
-								<td><input @keyup.enter="add" v-model.trim="bean.name"
+								<td><input @keyup.enter="submit(bean.id)" v-model.trim="bean.name"
 									type="text" class="form-control"></td>
 							</tr>
 							<tr>
@@ -132,7 +180,7 @@
 				</div>
 				<div class="modal-footer">
 					<button data-dismiss="modal" class="btn btn-default" type="button">关闭</button>
-					<button class="btn btn-primary" @click="submit" type="button">提交</button>
+					<button class="btn btn-primary" @click="submit(bean.id)" type="button">提交</button>
 				</div>
 			</div>
 		</div>

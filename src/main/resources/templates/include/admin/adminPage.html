@@ -8,9 +8,9 @@
 	      <a  href="#nowhere" @click="jump('pre')">‹</a>
 	    </li>		    
 
-		<li  v-for="i in pagination.navigatepageNums">
-			<a href="#nowhere" @click="jumpByNumber(i)" >
-				{{i}}
+		<li  >
+			<a href="#nowhere" @click="jumpByNumber(pagination.number)" >
+				{{pagination.number+1}}
 			</a>
 		</li>
 
@@ -22,7 +22,7 @@
 	    </li>	
 	    <div class="input-group step-group">
 			<input v-model:value="stepNum" type="number" id="stepInput" class="form-control" placeholder="页码">
-			<button class="btn btn-default" @click="jumpByNumber(stepNum)"  style="margin-left:5px ;" type="button">Go</button>
+			<button class="btn btn-default" @click="jumpByNumber(stepNum-1)"  style="margin-left:5px ;" type="button">Go</button>
 		</div>   
 	  </ul>
 	</nav>    

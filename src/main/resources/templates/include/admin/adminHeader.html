@@ -8,6 +8,15 @@
 	<link href="css/back/style.css" rel="stylesheet">
 	
 	<script>
+	
+	//确认删除提示框
+	function checkDeleteLink(){
+		var confirmDelete = confirm("确认要删除");
+		if(confirmDelete)
+			return true;
+		return false;
+	}
+	
 	//判断是否为空
 	function checkEmpty(value,text){
 		

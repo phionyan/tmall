@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import com.phion.tmall.util.FileUtils;
+import com.phion.tmall.util.FileUtil;
 
 @Configuration
 public class ResourceConfigAdapter extends WebMvcConfigurerAdapter {
@@ -19,7 +19,7 @@ public class ResourceConfigAdapter extends WebMvcConfigurerAdapter {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		// 获取文件的真实路径
-		String path = FileUtils.getResourcesPath()+"static\\img\\";
+		String path = FileUtil.getResourcesPath()+"static\\img\\";
 		String os = System.getProperty("os.name");
 		if (os.toLowerCase().startsWith("win")) {
 			System.out.println("file:"+path);
