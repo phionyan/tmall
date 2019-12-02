@@ -1,5 +1,8 @@
 <div class="pageDiv" id="pageDiv" th:fragment="html">
-	<nav>
+	<div v-if="pagination.totalPages<=0">
+		好像没有东西哦~~~
+	</div>
+	<nav v-else>
 	  <ul class="pagination">
 	    <li :class="{ disabled: pagination.first }">
 	      <a  href="#nowhere" @click="jump('first')">«</a>
@@ -19,11 +22,12 @@
 	    </li>
 	    <li :class="{ disabled: pagination.last }">
 	      <a  href="#nowhere" @click="jump('last')">»</a>
-	    </li>	
+	    </li>
 	    <div class="input-group step-group">
 			<input v-model:value="stepNum" type="number" id="stepInput" class="form-control" placeholder="页码">
 			<button class="btn btn-default" @click="jumpByNumber(stepNum-1)"  style="margin-left:5px ;" type="button">Go</button>
 		</div>   
 	  </ul>
-	</nav>    
+	</nav>
+	    
 </div>

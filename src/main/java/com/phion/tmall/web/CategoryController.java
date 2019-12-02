@@ -1,6 +1,5 @@
 package com.phion.tmall.web;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -76,13 +75,17 @@ public class CategoryController {
 	@PutMapping("/categories/{id}")
 	public Object update(Category bean, MultipartFile image,String name) throws IllegalStateException, IOException {
 		if(name!=null) bean.setName(name);
-		System.out.println("----------------更新---------------");
+		/*System.out.println("----------------更新---------------");
 		System.out.println(bean);
-		System.out.println("----------------更新---------------");
+		System.out.println("----------------更新---------------");*/
 		categoryService.update(bean);
 		if(image!=null)
 			saveOrUpdateImage(bean,image);
 		return null;
+	}
+	@GetMapping("/categories/{id}")
+	public Object get(@PathVariable(value = "id")int id) {
+		return categoryService.get(id);
 	}
 	
 }

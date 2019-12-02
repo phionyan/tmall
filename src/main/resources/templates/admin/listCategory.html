@@ -52,10 +52,10 @@
 	                    });
 	                    return true;
 	                },
-	                delete_: function () {//delete是关键字
+	                delete_: function (id) {//delete是关键字
 	                    if(!checkDeleteLink())//校验放入公共代码区
 	                        return;
-	                    var url = this.uri;
+	                    var url = this.uri+"/"+id;
 	                    axios.delete(url).then(function(response){
 	                        if(0!=response.data.length){
 	                            alert(response.data);
@@ -125,25 +125,25 @@
 		<button type="button"  class="btn btn-primary addCateBt" @click="toggleModal()">
 			添加分类</button>
 		<br /> <br />
-		<table class="table table-hover table-bordered">
+		<table class="table table-hover table-striped table-bordered  table-condensed">
 			<thead>
 				<tr class="success">
-					<td>ID</td>
-					<td>缩略图</td>
-					<td>分类名称</td>
-					<td>属性管理</td>
-					<td>产品管理</td>
-					<td>编辑</td>
-					<td>删除</td>
+					<th>ID</th>
+					<th>缩略图</th>
+					<th>分类名称</th>
+					<th>属性管理</th>
+					<th>产品管理</th>
+					<th>编辑</th>
+					<th>删除</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="bean in beans" class="active">
+				<tr v-for="bean in beans" >
 					<td>{{bean.id}}</td>
 					<td><img height="40px" :src="'img/category/'+bean.id+'.jpg'" />
 					</td>
 					<td>{{bean.name}}</td>
-					<td><a><span class="glyphicon glyphicon-th-list"></span> </a>
+					<td><a :href="'admin_property_list?cid=' + bean.id " ><span class="glyphicon glyphicon-th-list"></span> </a>
 					</td>
 					<td><a><span class="glyphicon glyphicon-shopping-cart"></span>
 					</a></td>

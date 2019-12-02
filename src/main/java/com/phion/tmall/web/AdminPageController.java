@@ -16,4 +16,9 @@ public class AdminPageController {
 		return "admin/listCategory";
 	}
 	
+	@GetMapping(value="/admin_property_list")
+    public String listProperty(){
+        return "admin/listProperty";
+    }
+	
 }
