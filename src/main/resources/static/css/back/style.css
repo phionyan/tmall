@@ -36,24 +36,56 @@
 	margin: 0 auto;
 }
 
-
 /*--------------------------------  */
 /* addModal */
-.addTable{
-	border-collapse:separate; 
-	border-spacing:0px 10px;
+.addTable {
+	border-collapse: separate;
+	border-spacing: 0px 10px;
 }
-.addCateBt{
-	float:right;
-	margin-right: 15px;
-}
-.addPropertyBt{
-	float:right;
-	margin-right: 15px;
-}
-.addProductBt{
-	float:right;
+
+.addCateBt {
+	float: right;
 	margin-right: 15px;
 }
 
+.addPropertyBt {
+	float: right;
+	margin-right: 15px;
+}
+
+.addProductBt {
+	float: right;
+	margin-right: 15px;
+}
+
+.addBriefImageBtDiv{
+	width:150px;
+	margin:0 auto;
+}
+
+.addDetailImageBtDiv{
+	width:150px;
+	margin:0 auto;
+}
+
 /*--------------------------------  */
+/* productimg */
+#briefImageArea {
+	width: 50%;
+	/* border: solid 1px black; */
+	float: left;
+	height: 500px;
+}
+
+#detailImageArea {
+	width: 50%;
+	/* border: solid 1px black; */
+	height: 500px;
+	float: left;
+}
+
+.img-table {
+	width: 50%;
+	margin: 0 auto;
+	margin-top: 10%;
+}

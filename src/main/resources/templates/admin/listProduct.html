@@ -174,11 +174,13 @@
 			<thead>
 				<tr class="success">
 					<th>ID</th>
+					<!-- <th>产品图片</th> -->
 					<th>产品名称</th>
 					<th>产品小标题</th>
 					<th>原价</th>
 					<th>促销价</th>
 					<th>库存数量</th>
+					<th>图片管理</th>
 					<th>编辑</th>
 					<th>删除</th>
 				</tr>
@@ -186,11 +188,14 @@
 			<tbody>
 				<tr v-for="bean in beans" >
 					<td>{{bean.id}}</td>
+					<!-- <td><img :src="'img/productBrief/'+pi.id+'.jpg'"></img></td> -->
 					<td>{{bean.name}}</td>
 					<td>{{bean.subTitle}}</td>
 					<td>{{bean.originalPrice}}</td>
 					<td>{{bean.promotePrice}}</td>
 					<td>{{bean.stock}}</td>
+					<td><a :href="'admin_productImage_list?pid=' + bean.id " ><span class="glyphicon glyphicon-picture"></span> </a>
+					</td>
 					<td><a><span @click="editModal(bean.id)"
 							class="glyphicon glyphicon-edit"></span> </a></td>
 					<td><a><span @click="delete_(bean.id)"

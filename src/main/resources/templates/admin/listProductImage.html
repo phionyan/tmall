@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="include/admin/adminHeader::html('属性管理')"></head>
+<body>
+	<div th:replace="include/admin/adminNavigator::html"></div>
+	<script>
+			$(function() {
+				var pid = getUrlParms("pid");
+				var data4vue = {
+					uri: 'productImages',
+					briefProductImages: [],
+		            detailProductImages: [],
+					breif_type: "添加简要图片",
+					detail_type:"添加详情图片",
+					briefFile:'',
+		            detailFile:'',
+					category:{
+						id:0,
+						name:null
+					},
+					product:{
+						id:0,
+						name:null
+					}
+					
+				};
+				var vm = new Vue({
+					el: '#workarea',
+					data: data4vue,
+					mounted: function() {
+						//alert("???");
+						this.getCategory();
+						this.listBrief();
+						this.listDetail();
+					},
+					methods: {
+						getCategory:function(){
+							var url = "products/"+pid;
+							axios.get(url).then(function(response){
+								vm.product = response.data;
+								vm.category = response.data.category;
+							});
+						},
+						listBrief: function() {
+							var url =  "products/"+pid+"/"+this.uri+"?type=brief";
+							axios.get(url).then(function(response) {
+								//alert(response);
+								vm.briefProductImages = response.data;
+							});
+						},
+						listDetail: function() {
+							var url =  "products/"+pid+"/"+this.uri+"?type=detail";
+							axios.get(url).then(function(response) {
+								//alert(response);
+								vm.detailProductImages = response.data;
+							});
+						},
+						addBrief: function() {
+							if (!checkEmpty(this.briefFile, "简要图片"))
+								return;
+							var url = this.uri;
+							var formData = new FormData();
+							formData.append("image", this.briefFile);
+							formData.append("pid",pid);
+							formData.append("type","brief");
+							axios.post(url, formData).then(function(response) {
+								vm.listBrief();
+								vm.briefFile = null;
+							});
+							return true;
+						},
+						addDetail: function() {
+							if (!checkEmpty(this.detailFile, "详情图片"))
+								return;
+							var url = this.uri;
+							var formData = new FormData();
+							formData.append("image", this.detailFile);
+							formData.append("pid",pid);
+							formData.append("type","detail");
+							axios.post(url, formData).then(function(response) {
+								vm.listDetail();
+								vm.detailFile = null;
+							});
+							return true;
+						},
+						getDetailFile:function(event){
+							this.detailFile = event.target.files[0];
+						},
+						getBriefFile:function(event){
+							this.briefFile = event.target.files[0];
+						},
+						delete_: function(id) { //delete是关键字
+							if (!checkDeleteLink()) //校验放入公共代码区
+								return;
+							var url = this.uri+"/"+id;
+							axios.delete(url).then(function(response) {
+								if (0 != response.data.length) {
+									alert(response.data);//有提示信息则显示
+								} else {
+									vm.listBrief();
+									vm.listDetail();
+								}
+							});
+						},
+						toggleBriefModal: function() {
+							$("#addBriefImageModal").modal('toggle');
+						},
+						toggleDetailModal: function() {
+							$("#addDetailImageModal").modal('toggle');
+						},
+						submitBrief: function(id) {
+							if (vm.addBrief()) {
+								vm.toggleBriefModal();
+								alert("提交成功！");
+							} else {
+								alert("提交失败")
+							}
+						},
+						submitDetail: function(id) {
+							if (vm.addDetail()) {
+								vm.toggleDetailModal();
+								alert("提交成功！");
+							} else {
+								alert("提交失败")
+							}
+						}
+					}
+				});
+			});
+		</script>
+	<div id="workarea">
+		<br /> <br />
+		<ol class="breadcrumb">
+			<li><a href="admin_category_list">所有分类</a></li>
+			<li><a :href="'admin_property_list?cid='+category.id">{{category.name}}</a></li>
+			<li><a
+				:href="'admin_product_list?pid='+product.id+'&cid='+category.id">{{product.name}}</a></li>
+			<li class="active">图片管理</li>
+		</ol>
+		<div id="briefImageArea">
+			<div class="addBriefImageBtDiv">
+			<button type="button" class="btn btn-primary"
+				@click="toggleBriefModal()">添加简单图片</button>
+			</div>
+			<br /> <br />
+			<table
+				class="img-table table table-hover table-striped table-bordered  table-condensed">
+				<thead>
+					<tr class="success">
+						<th>ID</th>
+						<th>产品简要图片缩略图</th>
+						<th>删除</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="pi in briefProductImages">
+						<td>{{pi.id}}</td>
+						<td>
+							<a title="点击查看原图" :href="'img/productBrief/'+pi.id+'.jpg'">
+								<img height="50px" :src="'img/productBrief/'+pi.id+'.jpg'">
+								</img>
+							</a>
+						</td>
+						<td><a><span @click="delete_(bean.id)"
+								class="glyphicon glyphicon-trash"></span> </a></td>
+					</tr>
+				</tbody>
+
+			</table>
+		</div>
+		<div id="detailImageArea">
+			<div class="addDetailImageBtDiv">
+				<button type="button" class="btn btn-primary "
+					@click="toggleDetailModal()">添加详细图片</button>
+			</div>	
+			<br /> <br />
+			<table
+				class="img-table table table-hover table-striped table-bordered  table-condensed">
+				<thead>
+					<tr class="success">
+						<th>ID</th>
+						<th>产品详情图片缩略图</th>
+						<th>删除</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="pi in detailProductImages">
+						<td>{{pi.id}}</td>
+						<td><a title="点击查看原图" :href="'img/productDetail/'+pi.id+'.jpg'"><img height="50px" :src="'img/productDetail/'+pi.id+'.jpg'"></img>
+						</a></td>
+						<td><a><span @click="delete_(pi.id)"
+								class="glyphicon glyphicon-trash"></span> </a></td>
+					</tr>
+				</tbody>
+
+			</table>
+		</div>
+
+		<div class="modal fade" id="addBriefImageModal" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button data-dismiss="modal" class="close" type="button">
+							<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+						</button>
+						<h4 class="modal-title">添加简要图片</h4>
+					</div>
+					<div class="modal-body">
+						<table class="addTable ">
+							<tr>
+								<td>请选择本地图片 400X400 为佳</td>
+
+							</tr>
+							<tr>
+								<td><input id="briefPic" type="file"
+									@change="getBriefFile($event)" name="image" /></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button data-dismiss="modal" class="btn btn-default" type="button">关闭</button>
+					<button class="btn btn-primary" @click="submitBrief(product.id)"
+						type="button">提交</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="addDetailImageModal" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button data-dismiss="modal" class="close" type="button">
+							<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+						</button>
+						<h4 class="modal-title">添加详情图片</h4>
+					</div>
+					<div class="modal-body">
+						<table class="addTable ">
+							<tr>
+								<td>请选择本地图片 宽度790 为佳</td>
+							</tr>
+							<tr>
+								<td><input id="detailPic" type="file"
+									@change="getDetailFile($event)" name="image" /></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button data-dismiss="modal" class="btn btn-default" type="button">关闭</button>
+					<button class="btn btn-primary" @click="submitDetail(product.id)"
+						type="button">提交</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
