@@ -145,7 +145,7 @@
 					<td>{{bean.name}}</td>
 					<td><a :href="'admin_property_list?cid=' + bean.id " ><span class="glyphicon glyphicon-th-list"></span> </a>
 					</td>
-					<td><a><span class="glyphicon glyphicon-shopping-cart"></span>
+					<td><a :href="'admin_product_list?cid=' + bean.id "><span class="glyphicon glyphicon-shopping-cart"></span>
 					</a></td>
 					<td><a><span @click="editModal(bean.name,bean.id)" class="glyphicon glyphicon-edit"></span> </a></td>
 					<td><a><span @click="delete_(bean.id)" class="glyphicon glyphicon-trash"></span> </a></td>

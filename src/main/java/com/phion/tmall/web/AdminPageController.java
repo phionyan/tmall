@@ -21,4 +21,8 @@ public class AdminPageController {
         return "admin/listProperty";
     }
 	
+	@GetMapping(value="/admin_product_list")
+    public String listProduct(){
+        return "admin/listProduct";
+    }
 }

@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:include="include/admin/adminHeader::html('属性管理')"></head>
+<head th:include="include/admin/adminHeader::html('产品管理')"></head>
 <body>
 	<div th:replace="include/admin/adminNavigator::html"></div>
 	<script>
 			$(function() {
 				var cid = getUrlParms("cid");
 				var data4vue = {
-					uri: 'properties',
+					uri: 'products',
 					beans: [],
 					pagination: {},
 					stepNum: 1,
 					bean: {	
 						id: 0,
 						name: null,
+						subTitle:null,
+						originalPrice:0,
+						promotePrice:0,
+						stock:0,
+						createDate:null,
 						category:{
 							id:0,
 							name:null
 						}
 					},
-					type: "添加属性",
+					type: "添加产品",
 					category:{
 						id:0,
 						name:null
@@ -40,6 +45,12 @@
 								vm.category = response.data;
 							});
 						},
+						get:function(id){
+							var url =  "products/"+id;
+							axios.get(url).then(function(response){
+								vm.bean = response.data;
+							});
+						},
 						list: function(start) {
 							//alert("list");
 							var url =  "categories/"+cid+"/"+this.uri+"?start="+start;
@@ -56,7 +67,13 @@
 							jumpByNumber(start, vm);
 						},
 						add: function() {
-							if (!checkEmpty(this.bean.name, "属性名称"))
+							if (!checkEmpty(this.bean.name, "产品名称"))
+								return;
+							if (!checkEmpty(this.bean.subTitle, "产品小标题"))
+								return;
+							if (!checkEmpty(this.bean.originalPrice, "原价"))
+								return;
+							if (!checkEmpty(this.bean.promotePrice, "促销价"))
 								return;
 							var url = this.uri;
 							this.category.id = cid;
@@ -80,25 +97,31 @@
 							});
 						},
 						edit: function(id) {
-							if (!checkEmpty(this.bean.name, "属性名称"))
+							if (!checkEmpty(this.bean.name, "产品名称"))
+								return;
+							if (!checkEmpty(this.bean.subTitle, "产品小标题"))
+								return;
+							if (!checkEmpty(this.bean.originalPrice, "原价"))
+								return;
+							if (!checkEmpty(this.bean.promotePrice, "促销价"))
 								return;
 							var url = this.uri + "/" + id;
 
-							var data = {name:this.bean.name};
-							axios.put(url, data).then(function(response) {
+							this.category.id = cid;
+							this.bean.category = this.category;
+							axios.put(url, this.bean).then(function(response) {
 								vm.list(0);
 								vm.resetModal();
 							});
 							return true;
 						},
-						editModal: function(name, id) {
-							vm.bean.name = name;
-							vm.bean.id = id;
-							vm.type = "编辑属性";
+						editModal: function(id) {
+							this.get(id);
+							vm.type = "编辑产品";
 							vm.toggleModal();
 						},
 						toggleModal: function() {
-							$("#addPropertyModal").modal('toggle');
+							$("#addProductModal").modal('toggle');
 						},
 						submit: function(id) {
 							if (id == 0) {
@@ -118,10 +141,15 @@
 							}
 						},
 						resetModal: function() {
-							vm.type = "添加属性";
-							vm.bean = {
+							vm.type = "添加产品";
+							vm.bean =  {	
 								id: 0,
 								name: null,
+								subTitle:null,
+								originalPrice:0,
+								promotePrice:0,
+								stock:0,
+								createDate:null,
 								category:{
 									id:0,
 									name:null
@@ -137,16 +165,20 @@
 		<ol class="breadcrumb">
 			<li><a href="admin_category_list">所有分类</a></li>
 			<li><a :href="'admin_property_list?cid='+category.id">{{category.name}}</a></li>
-			<li class="active">属性管理</li>
+			<li class="active">产品管理</li>
 		</ol>
-		<button type="button" class="btn btn-primary addPropertyBt"
-			@click="toggleModal()">添加属性</button>
+		<button type="button" class="btn btn-primary addProductBt"
+			@click="toggleModal()">添加产品</button>
 		<br /> <br />
 		<table class="table table-hover table-striped table-bordered  table-condensed">
 			<thead>
 				<tr class="success">
 					<th>ID</th>
-					<th>属性名称</th>
+					<th>产品名称</th>
+					<th>产品小标题</th>
+					<th>原价</th>
+					<th>促销价</th>
+					<th>库存数量</th>
 					<th>编辑</th>
 					<th>删除</th>
 				</tr>
@@ -155,7 +187,11 @@
 				<tr v-for="bean in beans" >
 					<td>{{bean.id}}</td>
 					<td>{{bean.name}}</td>
-					<td><a><span @click="editModal(bean.name,bean.id)"
+					<td>{{bean.subTitle}}</td>
+					<td>{{bean.originalPrice}}</td>
+					<td>{{bean.promotePrice}}</td>
+					<td>{{bean.stock}}</td>
+					<td><a><span @click="editModal(bean.id)"
 							class="glyphicon glyphicon-edit"></span> </a></td>
 					<td><a><span @click="delete_(bean.id)"
 							class="glyphicon glyphicon-trash"></span> </a></td>
@@ -163,7 +199,7 @@
 			</tbody>
 		</table>
 
-		<div class="modal fade" id="addPropertyModal" tabindex="-1"
+		<div class="modal fade" id="addProductModal" tabindex="-1"
 			role="dialog" aria-labelledby="myModalLabel">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -175,10 +211,30 @@
 					</div>
 					<div class="modal-body">
 						<table class="addTable ">
-							<tr>
-								<td>属性名称</td>
+							<tr	>
+								<td>产品名称</td>
 								<td><input @keyup.enter="submit(bean.id)"
 									v-model.trim="bean.name" type="text" class="form-control"></td>
+							</tr>
+							<tr	>
+								<td>产品小标题</td>
+								<td><input @keyup.enter="submit(bean.id)"
+									v-model.trim="bean.subTitle" type="text" class="form-control"></td>
+							</tr>
+							<tr	>
+								<td>原价</td>
+								<td><input @keyup.enter="submit(bean.id)"
+									v-model.trim="bean.originalPrice" type="number" class="form-control"></td>
+							</tr>
+							<tr	>
+								<td>促销价</td>
+								<td><input @keyup.enter="submit(bean.id)"
+									v-model.trim="bean.promotePrice" type="number" class="form-control"></td>
+							</tr>
+							<tr	>
+								<td>库存</td>
+								<td><input @keyup.enter="submit(bean.id)"
+									v-model.trim="bean.stock" type="text" class="form-control"></td>
 							</tr>
 						</table>
 					</div>

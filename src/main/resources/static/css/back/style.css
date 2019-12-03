@@ -29,7 +29,7 @@
 }
 
 #stepInput {
-	width: 50px;
+	width: 70px;
 }
 
 .step-group {
@@ -48,6 +48,10 @@
 	margin-right: 15px;
 }
 .addPropertyBt{
+	float:right;
+	margin-right: 15px;
+}
+.addProductBt{
 	float:right;
 	margin-right: 15px;
 }
