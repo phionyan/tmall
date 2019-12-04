@@ -30,4 +30,9 @@ public class AdminPageController {
     public String listProductImage(){
         return "admin/listProductImage";
     }
+	
+	@GetMapping(value="/admin_propertyValue_list")
+    public String listPropertyValue(){
+        return "admin/listPropertyValue";
+    }
 }

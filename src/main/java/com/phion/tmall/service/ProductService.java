@@ -1,5 +1,7 @@
 package com.phion.tmall.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -43,4 +45,10 @@ public class ProductService {
 		return productDAO.findOne(id);
 	}
 	
+	/**
+	 * 测试用
+	 */
+	public List<Product> list(){
+		return productDAO.findAll();
+	}
 }

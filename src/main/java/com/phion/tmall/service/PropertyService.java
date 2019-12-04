@@ -1,5 +1,7 @@
 package com.phion.tmall.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -45,4 +47,10 @@ public class PropertyService {
 	public Property get(int id) {
 		return propertyDAO.findOne(id);
 	}
+
+
+	public List<Property> listByCategory(Category category) {
+		return propertyDAO.findByCategory(category);
+	}
+
 }

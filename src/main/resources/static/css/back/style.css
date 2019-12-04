@@ -58,14 +58,14 @@
 	margin-right: 15px;
 }
 
-.addBriefImageBtDiv{
-	width:150px;
-	margin:0 auto;
+.addBriefImageBtDiv {
+	width: 150px;
+	margin: 0 auto;
 }
 
-.addDetailImageBtDiv{
-	width:150px;
-	margin:0 auto;
+.addDetailImageBtDiv {
+	width: 150px;
+	margin: 0 auto;
 }
 
 /*--------------------------------  */
@@ -89,3 +89,28 @@
 	margin: 0 auto;
 	margin-top: 10%;
 }
+
+/* ---------------------------- */
+/*propertyValue*/
+.ProValueTbDiv {
+	width: 70%;
+	margin: 0 auto;
+}
+
+.ProValueTbDiv table td p {
+	color: royalblue;
+	font-size: 18px;
+	margin-left: 50px;
+	padding-top: 5px;
+}
+
+#noProValueDiv {
+	margin: 0 auto;
+	margin: 50px;
+}
+
+#noProValueDiv {
+	font-size: 25px;
+	color: #00AAEE;
+}
+/* ------------------------ */
