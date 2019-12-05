@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="include/admin/adminHeader::html('用户管理')"></head>
+<!-- <body>
+	<div th:replace="include/admin/adminNavigator::html"></div>
+	<script>
+		$(function() {
+			var data4vue = {
+				uri : 'users',
+				beans : [],
+				pagination : {},
+				stepNum : 1
+			};
+			var vm = new Vue({
+				el : '#workarea',
+				data : data4vue,
+				mounted : function() {
+					this.list(0);
+				},
+				methods : {
+					list : function(start) {
+						var url = this.uri + "?start=" + (start);
+						axios.get(url).then(function(response) {
+							vm.beans = response.data.content;
+							vm.pagination = response.data;
+							//alert(vm.beans[0].name);
+						});
+					},
+				},
+				jump:function(type){
+					jump(type,vm);
+				},
+				jumpByNumber:function(start){
+					jumpByNumber(start,vm);
+				}
+			});
+		});
+	</script>
+	<div id="workarea">
+		<br /> <br />
+		<div class="label label-info">分类管理</div>
+		<br /> <br />
+		<table class="table table-hover table-striped table-bordered  table-condensed">
+			<thead>
+				<tr class="success">
+					<th>ID</th>
+					<th>用户名</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="bean in beans" >
+					<td>{{bean.id}}</td>
+					<td>{{bean.name}}</td>
+				</tr>
+			</tbody>
+		</table>
+
+		
+		<div th:replace="include/admin/adminPage::html"></div>
+	</div>
+</body> -->
+<body>
+	<div th:replace="include/admin/adminNavigator::html"></div>
+	<script>
+		$(function() {
+			var data4vue = {
+				uri : 'users',
+				beans : [],
+				pagination : {},
+				stepNum : 1,
+			};
+			var vm = new Vue({
+				el : '#workarea',
+				data : data4vue,
+				mounted : function() {
+					this.list(0);
+				},
+				methods : {
+					list : function(start) {
+						var url = this.uri + "?start=" + (start);
+						axios.get(url).then(function(response) {
+							vm.beans = response.data.content;
+							vm.pagination = response.data;
+							//alert(vm.beans[0].name);
+						});
+					},
+					jump : function(type) {
+						jump(type, vm); //定义在adminHeader.html 中
+					},
+					jumpByNumber : function(start) {
+						jumpByNumber(start, vm);
+					}
+				}	
+			});
+		});
+	</script>
+	<div id="workarea">
+		<br /> <br />
+		<div class="label label-info">分类管理</div>
+		<br /> <br />
+		<table class="table table-hover table-striped table-bordered  table-condensed">
+			<thead>
+				<tr class="success">
+					<th>ID</th>
+					<th>用户名</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="bean in beans" >
+					<td>{{bean.id}}</td>
+					<td>{{bean.name}}</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div th:replace="include/admin/adminPage::html"></div>
+	</div>
+</body>
+</html>

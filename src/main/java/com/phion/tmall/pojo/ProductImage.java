@@ -20,7 +20,7 @@ public class ProductImage {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)//加上这个注解，jpa会将save后的bean返回
 	@Column(name="id")
-	int id;
+	private int id;
 	
 	@ManyToOne
 	@JoinColumn(name="pid")

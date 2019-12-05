@@ -35,4 +35,9 @@ public class AdminPageController {
     public String listPropertyValue(){
         return "admin/listPropertyValue";
     }
+	
+	@GetMapping(value="/admin_user_list")
+    public String listUser(){
+        return "admin/listUser";
+    }
 }

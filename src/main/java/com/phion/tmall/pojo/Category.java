@@ -17,10 +17,10 @@ public class Category {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)//加上这个注解，jpa会将save后的bean返回
 	@Column(name = "id")
-	int id;
+	private int id;
 
 	@Column(name = "name")
-	String name;
+	private String name;
 
 	public int getId() {
 		return id;

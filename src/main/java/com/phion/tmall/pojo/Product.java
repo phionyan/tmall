@@ -21,18 +21,18 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)//加上这个注解，jpa会将save后的bean返回
 	@Column(name = "id")
-	int id;
+	private int id;
 	
 	
-	String name;//商品名称
+	private String name;//商品名称
 	
-	String subTitle;//小标题
+	private String subTitle;//小标题
 	
-	float originalPrice;//原价
+	private float originalPrice;//原价
 	
-	float promotePrice;//促销价
+	private float promotePrice;//促销价
 	
-	int stock;//库存量
+	private int stock;//库存量
 	
 	@ManyToOne
 	@JoinColumn(name="cid")
