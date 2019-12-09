@@ -24,7 +24,7 @@ public class ProductImage {
 	
 	@ManyToOne
 	@JoinColumn(name="pid")
-	//@JsonBackReference //解除双向关联，因为Product包含它
+	@JsonBackReference //解除双向关联，因为Product包含它,要不然json格式化时会无限递归
 	private Product product;
 	
 	String type;

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="include/admin/adminHeader::html('订单管理')"></head>
+<body>
+	<div th:replace="include/admin/adminNavigator::html"></div>
+	<script>
+		$(function() {
+			var data4vue = {
+				uri : 'orders',
+				beans : [],
+				pagination : {},
+				stepNum : 1,
+			};
+			var vm = new Vue({
+				el : '#workarea',
+				data : data4vue,
+				mounted : function() {
+					this.list(0);
+				},
+				methods : {
+					list : function(start) {
+						var url = this.uri + "?start=" + (start);
+						axios.get(url).then(function(response) {
+							vm.beans = response.data.content;
+							vm.pagination = response.data;
+							//alert(vm.beans[0].name);
+						});
+					},
+					jump : function(type) {
+						jump(type, vm); //定义在adminHeader.html 中
+					},
+					jumpByNumber : function(start) {
+						jumpByNumber(start, vm);
+					},
+					deliver:function(id,e){
+						//发货
+					    var url =  "deliverOrder/"+id;
+	                    axios.put(url).then(function(response) {
+	                    	if(response.data.code==200){
+	                        	$(e.target).hide();
+	                        	alert("发货成功！");
+	                        }else{
+	                        	alert(response.data.message);
+	                        }
+	                    }); 
+					},
+					//控制订单项的显示
+					showOrderItems: function(id){
+	                    $("#orderItemsTr"+id).toggle();
+	                }
+				},
+				//用moment做日期格式化，很好用！
+				filters: {
+				  formateDateFilter: function (value, formatString) {
+					if(value==null)
+			           return "";
+		            formatString = formatString || 'YYYY-MM-DD HH:mm:ss';//设置默认格式化方式
+		            return moment(value).format(formatString);
+				  }
+				}
+			});
+			
+		});
+	</script>
+	<div id="workarea">
+		<br /> <br />
+		<div class="label label-info">分类管理</div>
+		<br /> <br />
+		<table class="table table-striped table-bordered  table-condensed">
+			<thead>
+				<tr class="success">
+					<th>ID</th>
+					<th>状态</th>
+					<th>支付金额</th>
+					<th width="100px">购买数量</th>
+					<th width="100px">买家昵称</th>
+					<th>创建时间</th>
+					<th>支付时间</th>
+					<th>发货时间</th>
+					<th>确认收获时间</th>
+					<th width="120px">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<template v-for="bean in beans">
+					<tr >
+						<td>{{bean.id}}</td>
+						<td>{{bean.statusDesc}}</td>
+						<td>{{bean.totalPrice}}</td>
+						<td>{{bean.totalNumber}}</td>
+						<td>{{bean.user.name}}</td>
+						<td>{{bean.createDate | formateDateFilter}}</td>
+						<td>{{bean.payDate | formateDateFilter}}</td>
+						<td>{{bean.deliveryDate | formateDateFilter}}</td>
+						<td>{{bean.confirmDate | formateDateFilter}}</td>
+						<td>
+							<input type="button" value="查看详情"  @click="showOrderItems(bean.id)" class="btn btn-primary btn-xs">
+							<input v-if="bean.status=='waitDelivery'" @click="deliver(bean.id,$event)" type="button" value="发货"  class="btn btn-primary btn-xs">
+						</td>
+					</tr>
+					<tr class="orderItemTr"  :id="'orderItemsTr'+bean.id">
+						<td colspan="10" align="center">
+							<table width="800px">
+								<tr v-for="item in bean.orderItems">
+									<td><img width="40px" height="40px" :src="'img/productBrief/'+item.product.firstProductImage.id+'.jpg'" /></td>
+									<td>
+										<a href="#">{{item.product.name}}</a>
+									</td>
+									<td>数量：{{item.number}}</td>
+									<td>单价：{{item.product.promotePrice}}</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</template>
+			</tbody>
+		</table>
+
+		<div th:replace="include/admin/adminPage::html"></div>
+	</div>
+</body>
+</html>

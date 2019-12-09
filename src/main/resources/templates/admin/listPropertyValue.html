@@ -48,7 +48,7 @@
 						var url = this.uri;
 						//var propertyValues = JSON.stringify(vm.propertyValues);
 						axios.put(url,vm.propertyValues,{header:{'Content-Type':
-							'application/;charset=utf8'}}
+							'application/json;charset=utf8'}}
 						).then(function(response) {
 							vm.list();
 						});

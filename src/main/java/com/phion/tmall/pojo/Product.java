@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -39,6 +40,9 @@ public class Product {
 	private Category category;
 	
 	Date createDate;
+	
+	@Transient
+	private ProductImage firstProductImage;//这个字段用于提供预览图片，不需要序列化
 
 	public int getId() {
 		return id;
@@ -102,6 +106,16 @@ public class Product {
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	
+	
+	public ProductImage getFirstProductImage() {
+		return firstProductImage;
+	}
+
+	public void setFirstProductImage(ProductImage firstProductImage) {
+		this.firstProductImage = firstProductImage;
 	}
 
 	@Override

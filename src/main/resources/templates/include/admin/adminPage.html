@@ -5,10 +5,10 @@
 	<nav v-else>
 	  <ul class="pagination">
 	    <li :class="{ disabled: pagination.first }">
-	      <a  href="#nowhere" @click="jump('first')">«</a>
+	      <a  href="#nowhere" @click="jump('first')">«首页</a>
 	    </li>
 	    <li :class="{ disabled: !pagination.hasPrevious }">
-	      <a  href="#nowhere" @click="jump('pre')">‹</a>
+	      <a  href="#nowhere" @click="jump('pre')">‹上一页</a>
 	    </li>		    
 
 		<li  >
@@ -18,10 +18,10 @@
 		</li>
 
 	    <li :class="{ disabled: !pagination.hasNext }">
-	      <a  href="#nowhere" @click="jump('next')">›</a>
+	      <a  href="#nowhere" @click="jump('next')">下一页›</a>
 	    </li>
 	    <li :class="{ disabled: pagination.last }">
-	      <a  href="#nowhere" @click="jump('last')">»</a>
+	      <a  href="#nowhere" @click="jump('last')">末页»</a>
 	    </li>
 	    <div class="input-group step-group">
 			<input v-model:value="stepNum" type="number" id="stepInput" class="form-control" placeholder="页码">
