@@ -1,0 +1,28 @@
+<div th:fragment="html">
+	<div class="homepage-category-list" style="margin-top:50px;">
+		<div class="category-list-content" style="padding-top:25px;">
+			<div class="category-list-content-row" v-for="c,cindex in categories">
+				<div class="eachCategory-title">
+					<div class="left-mask"></div>
+					<span>{{c.name}}</span>
+				</div>
+				<div class="category-list-eachCategory"
+					v-for="p ,pindex in c.products" v-if="pindex<=4">
+					<div class="product-of-categoty-list">
+						<a href="#"> <img width="100%"
+							:src="'img/productBrief_middle/'+p.firstProductImage.id+'.jpg'" />
+						</a>
+						<div class="productItemDesc" style="width: 90%; margin: 0 auto; margin-top: 15px;">
+							<span>{{p.name}} </span>
+						</div>
+						<div
+							style="width: 90%; margin: 0 auto; margin-top: 10px; font-size: 18px; color: #FF003A;">
+							<span> {{p.promotePrice}} 元 </span>
+						</div>
+					</div>
+					<div></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

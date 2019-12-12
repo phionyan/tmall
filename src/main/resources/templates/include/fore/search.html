@@ -1,0 +1,21 @@
+<div th:fragment="html">
+	<div class="searchDiv">
+		<div class="search-content">
+			<a style="float: left;"> <img id="logo"
+				src="img/site/logo.gif" class="logo">
+			</a>
+			<form class="searchForm" action="search" method="get">
+				<div class="searchGroup">
+					<input class="searchInput" />
+					<button class="searchBtn">搜索</button>
+				</div>
+				<div class="searchBlow">
+				<span style="font-size:15px;">都在搜:</span>
+				<span v-for="word in hotWords">
+					<a href="#"><span>{{word}}</span></a>
+				</span>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

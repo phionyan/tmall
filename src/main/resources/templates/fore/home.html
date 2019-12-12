@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="include/fore/header::html(主页)"></head>
+	<script>
+		$(function(){
+			var data4vue = {
+				user:{
+					id:0
+				},
+				hotWords:null,
+				categories: null,
+				c: {
+					name: "hello"
+				}
+			};
+			var vm = new Vue({
+				el:'#workingArea',
+				data:data4vue,
+				mounted : function() {
+					this.init();
+				},
+				methods:{
+					init:function(){
+						var uri = "hotWords/0";
+						axios.get(uri).then(function(response){
+							var res = response.data;
+							vm.hotWords = res.data.hotWords;
+						});
+						//获取推荐分类
+						uri = "recommendCategories/0";
+						axios.get(uri).then(function(response){
+							var res = response.data;
+							vm.categories = res.data.recommendCategories;
+						});
+					}
+				}
+			});
+		});
+	</script>
+<body>
+	<div id="workingArea">
+		<div th:replace="include/fore/top::html"></div>
+		<div th:replace="include/fore/search::html"></div>
+		<div th:replace="include/fore/home/homePage::html"></div>
+		<div th:replace="include/fore/footer::html"></div>
+	</div>
+</body>
+</html>
