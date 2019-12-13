@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="include/fore/header::html(注册)"></head>
+<script>
+    $(function(){
+		var data4vue = {
+			hotWords:null,
+		};
+		var vm = new Vue({
+			el:'#workingArea',
+			data:data4vue,
+			mounted : function() {
+				this.init();
+			},
+			methods:{
+				init:function(){
+					var uri = "hotWords/0";
+					axios.get(uri).then(function(response){
+						var res = response.data;
+						vm.hotWords = res.data.hotWords;
+					});
+				}
+			}
+		});
+    });
+    </script>
+<body>
+	<div id="workingArea">
+		<div th:replace="include/fore/top::html"></div>
+		<div th:replace="include/fore/simpleSearch::html"></div>
+		<div th:replace="include/fore/registeSuccessPage::html"></div>
+		<div th:replace="include/fore/footer::html"></div>
+	</div>
+</body>
+</html>

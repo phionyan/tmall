@@ -8,10 +8,15 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.HtmlUtils;
 
 import com.phion.tmall.pojo.Category;
+import com.phion.tmall.pojo.User;
 import com.phion.tmall.service.CategoryService;
+import com.phion.tmall.service.UserService;
 import com.phion.tmall.util.Result;
 /**
  * 由于前端业务交错
@@ -23,6 +28,8 @@ import com.phion.tmall.util.Result;
 public class ForeRestfulController {
 	
 	@Autowired CategoryService categoryService;
+	
+	@Autowired UserService userService;
 	
 	/**
 	 * 获取某个用户的推荐搜索关键词
@@ -51,4 +58,20 @@ public class ForeRestfulController {
 		data.put("recommendCategories",recommendCategories);
 		return Result.success(data);
 	}
+	
+	/**
+	 * 注册用户
+	 * @return
+	 */
+	@PostMapping("/user_regist")
+	public Object getRecommendCategories(@RequestBody User user) {
+		if(userService.isExist(user.getName())) {
+			return Result.fail("用户名已注册");
+		}
+		
+        user.setName(HtmlUtils.htmlEscape(user.getName()));
+		userService.add(user);
+		return Result.success();
+	}
+	
 }

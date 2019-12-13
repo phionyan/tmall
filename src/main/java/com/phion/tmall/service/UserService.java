@@ -47,4 +47,22 @@ public class UserService {
 	public List<User> listAll() {
 		return userDAO.findAll();
 	}
+	
+	/**
+	 * 检测用户名是否已存在
+	 */
+	public boolean isExist(String name) {
+        User user = getByName(name);
+        return null!=user;
+    }
+
+	/**
+	 * 根据用户名查询用户
+	 * @param name
+	 * @return
+	 */
+	private User getByName(String name) {
+		User user = userDAO.findByName(name);
+		return user;
+	}
 }

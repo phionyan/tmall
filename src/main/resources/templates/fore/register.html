@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="include/fore/header::html(主页)"></head>
+	<script>
+		$(function(){
+			var data4vue = {
+				user:{
+					id:'',
+					name:'',
+					password:'',
+					repeatpassword:''
+				},
+				uri:"user_regist",
+				hotWords:null,
+			};
+			var vm = new Vue({
+				el:'#workingArea',
+				data:data4vue,
+				mounted : function() {
+					this.init();
+				},
+				methods:{
+					init:function(){
+						var uri = "hotWords/0";
+						axios.get(uri).then(function(response){
+							var res = response.data;
+							vm.hotWords = res.data.hotWords;
+						});
+					},
+					regist:function(){
+                        var url =  this.uri;
+                        if(0==this.user.name.length){
+                            $("span.errorMessage").html("请输入用户名");
+                            $("div.registErrorDiv").css("visibility","visible");
+                            return;
+                        }
+                        if(0==this.user.password.length){
+                            $("span.errorMessage").html("请输入密码");
+                            $("div.registErrorDiv").css("visibility","visible");
+                            return;
+                        }
+                        if(0==this.user.repeatpassword.length){
+                            $("span.errorMessage").html("请再次输入密码");
+                            $("div.registErrorDiv").css("visibility","visible");
+                            return;
+                        }
+                        if(this.user.password !=this.user.repeatpassword){
+                            $("span.errorMessage").html("两次密码不一致");
+                            $("div.registErrorDiv").css("visibility","visible");
+                            return;
+                        }
+ 
+                        axios.post(url,this.user).then(function(response) {
+                            var result = response.data;
+                            if(result.code==200){
+                                location.href="registSuccess";
+                            }
+                            else if(result.code==400){
+                                $("span.errorMessage").html(result.message);
+                                $("div.registErrorDiv").css("visibility","visible");
+                            }
+                        });
+                    }
+				
+				}
+			});
+		});
+	</script>
+<body>
+	<div id="workingArea">
+		<div th:replace="include/fore/top::html"></div>
+		<div th:replace="include/fore/simpleSearch::html"></div>
+		<div th:replace="include/fore/registPage::html"></div>
+		<div th:replace="include/fore/footer::html"></div>
+	</div>
+</body>
+</html>

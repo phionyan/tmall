@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * 用于负责前端的页面之前的跳转
+ * 
  * @author 15037
  *
  */
@@ -18,10 +19,19 @@ public class ForePageController {
 	public String fore() {
 		return "redirect:home";
 	}
-	
+
 	@GetMapping("home")
 	public String home() {
 		return "fore/home";
 	}
-	
+
+	@GetMapping(value = "/register")
+	public String register() {
+		return "fore/register";
+	}
+
+	@GetMapping(value="/registSuccess")
+	public String registeSuccess() {
+		return "fore/registSuccess";
+	}
 }

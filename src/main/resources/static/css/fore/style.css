@@ -1,8 +1,8 @@
 body {
 	font-size: 12px;
 	font-family: Arial;
-	min-width:1024px;
-/* 	width:1920px; */
+	min-width: 1024px;
+	/* 	width:1920px; */
 }
 /****************************/
 /* top.html */
@@ -29,7 +29,7 @@ body {
 	margin-left: 15%;
 }
 
-.top-content-left a ,  .top-content-left span {
+.top-content-left a, .top-content-left span {
 	margin: 0px 10px;
 	color: #999;
 	font-size: 12px;
@@ -40,7 +40,7 @@ body {
 	margin-right: 15%;
 }
 
-.top-content-right a , .top-content-left span {
+.top-content-right a, .top-content-left span {
 	margin: 0px 10px;
 	color: #999;
 	font-size: 12px;
@@ -93,7 +93,6 @@ body {
 	color: #C40000;
 	text-decoration: none;
 } */
-
 .searchBlow span {
 	margin: 0 7px;
 	color: #999;
@@ -110,16 +109,14 @@ body {
 
 /************************/
 /* homePage.html-----homePageCategoryAll.html */
-
-div.carouselBackgroundDiv{
-	width:100%;
-	height:530px;
+div.carouselBackgroundDiv {
+	width: 100%;
+	height: 530px;
 	background-color: #E8E8E8;
 	position: absolute;
-	top:36px;
-	z-index:-1;
+	top: 36px;
+	z-index: -1;
 }
-
 
 div.categoryWithCarousel div.rightMenu {
 	display: inline-block;
@@ -129,10 +126,9 @@ div.categoryWithCarousel div.headbar {
 	background-color: #DD2727;
 }
 
-
 div.categoryWithCarousel {
 	width: 100%;
-	position:relative;
+	position: relative;
 }
 
 div.categoryWithCarousel div.productsAsideCategorys {
@@ -164,7 +160,7 @@ div.categoryWithCarousel div.eachCategory {
 	font-size: 14px;
 	/* 	background-image:url(../../img/site/eachcategory.png); */
 	/* 	background-repeat: no-repeat; */
-	width:200px;
+	width: 200px;
 }
 
 div.categoryWithCarousel div.rightMenu {
@@ -183,6 +179,7 @@ div.categoryWithCarousel div.rightMenu a {
 	font-size: 16px;
 	color: white;
 }
+
 div.rightMenu a:hover {
 	text-decoration: none;
 }
@@ -235,12 +232,9 @@ div.searchBelow span {
 	color: #999;
 }
 
-
-
-div.homepageDiv{
-	position:relative;
+div.homepageDiv {
+	position: relative;
 }
-
 
 img.catear {
 	position: absolute;
@@ -248,10 +242,9 @@ img.catear {
 	display: none;
 }
 
-.carousel-of-product{
-	margin-left:15%;
+.carousel-of-product {
+	margin-left: 15%;
 }
-
 
 /* homePage.html-----homePageCategoryList.html */
 .category-list-content {
@@ -281,16 +274,16 @@ img.catear {
 	cursor: pointer;
 	border: 1px solid white;
 }
+
 .product-of-categoty-list:hover {
-	border:solid red 1px;
+	border: solid red 1px;
 }
 
-
-.eachCategory-title span{
+.eachCategory-title span {
 	font-size: 16px;
-    margin-left: 30px;
-    color: #646464;
-    font-weight: bold;
+	margin-left: 30px;
+	color: #646464;
+	font-weight: bold;
 }
 
 .left-mask {
@@ -309,3 +302,47 @@ span.productItemDesc {
 	padding: 16px;
 }
 /************************/
+/* 
+registPage */
+.registErrorDiv {
+	width: 800px;
+	margin: 0px auto;
+	height: 50px;
+	text-align: center;
+	visibility: hidden;
+	padding-bottom: 50px;
+}
+
+.registTable {
+	width: 500px;
+	margin: 0 auto;
+	margin-top: 100px;
+	margin-bottom: 50px;
+}
+
+.registTable td {
+	padding: 10px 30px;
+}
+
+.registerTip {
+	font-weight: bold;
+}
+
+.registerTableLeftTD {
+	width: 200px;
+	text-align: left;
+}
+
+.registerButtonTD {
+	text-align: center;
+	font-size: 12px;
+}
+
+.registerButtonTD button {
+	width: 170px;
+	height: 36px;
+	border-radius: 2px;
+	color: white;
+	background-color: #C40000;
+}
+F /**********************/

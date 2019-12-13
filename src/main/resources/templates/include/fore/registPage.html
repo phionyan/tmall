@@ -1,0 +1,41 @@
+<div th:fragment="html">
+	<div class="registDiv">
+		<div class="registErrorDiv">
+			<div class="alert alert-danger" role="alert">
+				<span class="errorMessage">请输入重复密码</span>
+			</div>
+		</div>
+		<div class="registTable">
+			<table>
+				<tbody>
+					<tr class="registerTip registerTableLeftTD">
+						<td>设置会员名</td>
+					</tr>
+					<tr>
+						<td class="registerTableLeftTD">登录名</td>
+						<td><input id="name" placeholder="请输入用户名"
+							v-model:value="user.name" /></td>
+					</tr>
+					<tr>
+						<td class="registerTip registerTableLeftTD">设置登录密码</td>
+						<td>登录时验证，保护账号信息</td>
+					</tr>
+					<tr>
+						<td class="registerTableLeftTD">登录密码</td>
+						<td><input id="password" placeholder="请输入密码"
+							v-model:value="user.password" /></td>
+					</tr>
+					<tr>
+						<td class="registerTableLeftTD">密码确认</td>
+						<td><input id="repeatpassword" v-model:value="user.repeatpassword" placeholder="请再次输入密码" /></td>
+					</tr>
+					<tr>
+						<td colspan="2" class="registerButtonTD">
+							<button @click="regist()">提 交</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
