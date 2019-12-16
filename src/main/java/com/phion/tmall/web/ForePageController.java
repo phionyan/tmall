@@ -1,5 +1,7 @@
 package com.phion.tmall.web;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -25,7 +27,7 @@ public class ForePageController {
 		return "fore/home";
 	}
 
-	@GetMapping(value = "/register")
+	@GetMapping(value = "/regist")
 	public String register() {
 		return "fore/register";
 	}
@@ -34,4 +36,16 @@ public class ForePageController {
 	public String registeSuccess() {
 		return "fore/registSuccess";
 	}
+	
+	@GetMapping(value="/login")
+	public String login() {
+		return "fore/login";
+	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("user");
+		return "redirect:home";
+	}
+	
 }

@@ -346,3 +346,98 @@ registPage */
 	background-color: #C40000;
 }
 F /**********************/
+
+/* loginPage */
+
+
+
+
+
+div.loginDivInProductPageModalDiv {
+	width: 350px;
+}
+
+div.deleteConfirmModalDiv {
+	width: 350px;
+}
+
+div.loginDivInProductPage {
+	background-color: white;
+	width: 350px;
+	height: 400px;
+	padding: 60px 25px 80px 25px;
+}
+
+div.loginSmallDiv {
+	background-color: white;
+	position: absolute;
+	right: 180px;
+	top: 180px;
+	width: 350px;
+	height: 400px;
+	padding: 60px 25px 80px 25px;
+}
+
+div.loginErrorMessageDiv {
+	width: 300px;
+	position: absolute;
+	top: 20px;
+	visibility: hidden;
+}
+
+div.loginErrorMessageDiv div.alert {
+	padding: 5px !important;
+}
+
+div.login_acount_text {
+	color: #3C3C3C;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+div.loginInput {
+	border: 1px solid #CBCBCB;
+	margin: 20px 0px;
+}
+
+div.loginInput input {
+	display: inline-block;
+	border: 0px solid transparent;
+	width: 244px;
+	height: 30px;
+	position: relative;
+	left: 6px;
+	top: 6px;
+}
+
+div.loginInput span, div.loginInput input {
+	display: inline-block;
+}
+
+div.loginInput span.loginInputIcon {
+	margin: 0px;
+	background-color: #CBCBCB;
+	width: 40px;
+	height: 40px;
+}
+
+span.loginInputIcon span.glyphicon {
+	font-size: 22px;
+	position: relative;
+	left: 9px;
+	top: 9px;
+	color: #606060;
+}
+
+button.redButton {
+	color: white;
+	background-color: #C40000;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+img.loginBackgroundImg {
+	display: block;
+	margin: 0px auto;
+}
+/*************************/

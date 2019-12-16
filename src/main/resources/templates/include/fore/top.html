@@ -1,4 +1,10 @@
 <div th:fragment="html">
+	<div id="sessionTestDiv" th:if="${session!=null}">
+		<div id="userTestDiv" th:if="${session.user!=null}">
+			<div id="userDiv" style="display:none;" th:attr="name=${session.user.name},uid=${session.user.id}">
+			</div>
+		</div>
+	</div>
 	<div id="homeTop" class="home-top">
 		<div class="home-top-middle">
 			<div class="top-content-left">
@@ -7,7 +13,14 @@
 						<span style="color: #C40000; margin: 0px;"
 							class=" glyphicon glyphicon-home"></span> 天猫首页
 					</div>
-				</a> <span>瞄，欢迎来到天猫</span> <a>请登录</a> <a>免费注册</a>
+				</a> 
+				<span>瞄，欢迎来到天猫</span> 
+				
+				<a href="login" v-if="!user.id">请登录</a>
+				<a href="#" v-else>{{user.name}} </a>
+				
+				 <a href="regist" v-if="!user.id">免费注册</a>
+				<a href="logout" v-else>退出 </a>
 			</div>
 
 			<div class="top-content-right">

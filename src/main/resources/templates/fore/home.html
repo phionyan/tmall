@@ -5,7 +5,8 @@
 		$(function(){
 			var data4vue = {
 				user:{
-					id:0
+					id:null,
+					name:""
 				},
 				hotWords:null,
 				categories: null,
@@ -21,6 +22,13 @@
 				},
 				methods:{
 					init:function(){
+						var userDiv = $("#userDiv");
+						if(userDiv){
+							//从session中加载用户信息
+							this.user.name = $("#userDiv").attr("name");
+							this.user.id = $("#userDiv").attr("uid");	
+						}
+						//alert(this.user.id);
 						var uri = "hotWords/0";
 						axios.get(uri).then(function(response){
 							var res = response.data;
@@ -32,6 +40,7 @@
 							var res = response.data;
 							vm.categories = res.data.recommendCategories;
 						});
+						
 					}
 				}
 			});

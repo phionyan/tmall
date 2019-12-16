@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -64,7 +66,7 @@ public class ForeRestfulController {
 	 * @return
 	 */
 	@PostMapping("/user_regist")
-	public Object getRecommendCategories(@RequestBody User user) {
+	public Object userRegist(@RequestBody User user) {
 		if(userService.isExist(user.getName())) {
 			return Result.fail("用户名已注册");
 		}
@@ -73,5 +75,30 @@ public class ForeRestfulController {
 		userService.add(user);
 		return Result.success();
 	}
+	
+	/**
+	 * 用户登录
+	 * @return
+	 */
+	@PostMapping("/user_login")
+	public Object userLogin(@RequestBody User user,HttpSession session) {
+	    user.setName(HtmlUtils.htmlEscape(user.getName()));
+	 
+	    user =userService.get(user.getName(),user.getPassword());
+	    if(null==user){
+	        String message ="账号密码错误";
+	        return Result.fail(message);
+	    }
+	    else{
+	        session.setAttribute("user", user);
+	        return Result.success();
+	    }
+	}
+	
+	/*@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("user");
+		return "redirect:home";
+	}*/
 	
 }

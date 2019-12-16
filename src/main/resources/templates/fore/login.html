@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="include/fore/header::html(登录)"></head>
+<script>
+	$(function() {
+		var data4Vue = {
+			uri : 'user_login',
+			result : [],
+			user : {
+				name : '',
+				password : ''
+			}
+		};
+		//ViewModel
+		var vue = new Vue({
+			el : '#workingArea',
+			data : data4Vue,
+			mounted : function() {
+				this.init();
+			},
+			methods : {
+				init : function() {
+					//do something
+				},
+				login : function() {
+					var url = this.uri;
+					if (0 == this.user.name.length) {
+						$("span.errorMessage").html("请输入用户名");
+						$("div.loginErrorMessageDiv").css("visibility",
+								"visible");
+						return;
+					}
+					if (0 == this.user.password.length) {
+						$("span.errorMessage").html("请输入密码");
+						$("div.loginErrorMessageDiv").css("visibility",
+								"visible");
+						return;
+					}
+
+					axios.post(url, this.user)
+							.then(function(response) {
+										var result = response.data;
+										if (result.code == 200) {
+											location.href = "home";
+										} else if (result.code == 400) {
+											$("span.errorMessage").html(
+													result.message);
+											$("div.loginErrorMessageDiv").css(
+													"visibility", "visible");
+										}
+									});
+				}
+			}
+		});
+
+	})
+</script>
+
+<body>
+	<div id="workingArea">
+		<div th:replace="include/fore/loginPage::html"></div>
+		<div th:replace="include/fore/footer::html"></div>
+	</div>
+</body>
+</html>

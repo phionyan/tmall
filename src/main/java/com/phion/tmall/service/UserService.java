@@ -65,4 +65,14 @@ public class UserService {
 		User user = userDAO.findByName(name);
 		return user;
 	}
+
+	/**
+	 * 根据用户名与密码校验用户
+	 * @param name
+	 * @param password
+	 * @return
+	 */
+	public User get(String name, String password) {
+		return userDAO.getByNameAndPassword(name,password);
+	}
 }
