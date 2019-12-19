@@ -1,6 +1,7 @@
 package com.phion.tmall.pojo;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,6 +45,22 @@ public class Product {
 	@Transient
 	private ProductImage firstProductImage;//这个字段用于提供预览图片，不需要序列化
 
+	
+	/**
+	 * 前台用于展示的数据
+	 */
+	@Transient
+	private List<ProductImage> productBriefImages;
+	
+	@Transient
+	private List<ProductImage> productDetailImages;
+	
+	@Transient
+	private int saleCount;//销量
+	
+	@Transient
+	private int reviewCount;//评价数量 
+	
 	public int getId() {
 		return id;
 	}
@@ -108,8 +125,6 @@ public class Product {
 		this.createDate = createDate;
 	}
 
-	
-	
 	public ProductImage getFirstProductImage() {
 		return firstProductImage;
 	}
@@ -117,13 +132,50 @@ public class Product {
 	public void setFirstProductImage(ProductImage firstProductImage) {
 		this.firstProductImage = firstProductImage;
 	}
+	
+	
+	
+
+	public List<ProductImage> getProductBriefImages() {
+		return productBriefImages;
+	}
+
+	public void setProductBriefImages(List<ProductImage> productBriefImages) {
+		this.productBriefImages = productBriefImages;
+	}
+
+	public List<ProductImage> getProductDetailImages() {
+		return productDetailImages;
+	}
+
+	public void setProductDetailImages(List<ProductImage> productDetailImages) {
+		this.productDetailImages = productDetailImages;
+	}
+	
+	
+	public int getSaleCount() {
+		return saleCount;
+	}
+
+	public void setSaleCount(int saleCount) {
+		this.saleCount = saleCount;
+	}
+
+	public int getReviewCount() {
+		return reviewCount;
+	}
+
+	public void setReviewCount(int reviewCount) {
+		this.reviewCount = reviewCount;
+	}
 
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", subTitle=" + subTitle + ", originalPrice=" + originalPrice
 				+ ", promotePrice=" + promotePrice + ", stock=" + stock + ", category=" + category + ", createDate="
-				+ createDate + "]";
+				+ createDate + ", firstProductImage=" + firstProductImage + ", productBriefImages=" + productBriefImages
+				+ ", productDetailImages=" + productDetailImages + ", saleCount=" + saleCount + ", reviewCount="
+				+ reviewCount + "]";
 	}
-	
 	
 }

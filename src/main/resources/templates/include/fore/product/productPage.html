@@ -1,0 +1,11 @@
+<div th:fragment="html">
+    <title>模仿天猫官网 -- {{product.name}}</title>
+    <div class="categoryPictureInProductPageDiv">
+        <img v-if="product!=null && product.category!=null" class="categoryPictureInProductPage" :src="'img/category/'+product.category.id+'.jpg'">
+    </div>
+    <div class="productPageDiv">
+        <div th:replace="include/fore/product/imgAndInfo::html" ></div>
+        <div th:replace="include/fore/product/productReview::html" ></div>
+        <div th:replace="include/fore/product/productDetail::html" ></div>
+    </div>
+</div>

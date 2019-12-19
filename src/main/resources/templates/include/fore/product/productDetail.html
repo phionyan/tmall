@@ -1,0 +1,26 @@
+<div th:fragment="html">
+	<div class="productDetailDiv" v-show="showDetail">
+		<div class="productDetailTopPart">
+			<div class="productReviewOrDetailDiv productDetailDivInDetail">
+				商品详情</div>
+			<div class="productReviewOrDetailDiv productReviewDivInDetail"
+				@click="toggle2Review">
+				累计评价&nbsp;<span class="productReviewTopReviewLinkNumber">{{product.reviewCount}}</span>
+			</div>
+		</div>
+
+		<div class="productParamterPart">
+			<div class="productParamter">产品参数：</div>
+			<div class="productParamterList">
+				<span v-for="pv in pvs">{{pv.property.name}}: {{pv.value }} </span>
+			</div>
+			<div style="clear:both"></div>
+		</div>
+
+		<div class="productDetailImagesPart">
+			<img v-for="pi in product.productDetailImages"
+				:src="'img/productDetail/'+pi.id+'.jpg'">
+		</div>
+	</div>
+</div>
+

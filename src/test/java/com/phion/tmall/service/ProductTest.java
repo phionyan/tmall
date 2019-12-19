@@ -27,4 +27,12 @@ public class ProductTest {
 			System.out.println(iterator.next());
 		}
 	}
+	
+	@Test
+	public void testsetSaleAndReviewNumber() {
+		Product p = productService.get(3);
+		productService.setSaleAndReviewNumber(p);
+		System.out.println(p);
+		System.out.println("over");
+	}
 }

@@ -48,4 +48,8 @@ public class ForePageController {
 		return "redirect:home";
 	}
 	
+	@GetMapping("/foreproduct")
+	public String product() {
+		return "fore/product";
+	}
 }

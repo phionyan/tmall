@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.phion.tmall.dao.ProductDAO;
 import com.phion.tmall.pojo.Category;
 import com.phion.tmall.pojo.Product;
+import com.phion.tmall.pojo.Review;
 import com.phion.tmall.util.Page4Navigator;
 
 
@@ -20,6 +21,8 @@ public class ProductService {
 
 	@Autowired ProductDAO productDAO;
 	@Autowired CategoryService categoryService;
+	@Autowired ReviewService reviewService;
+	@Autowired OrderItemService orderItemService;
 	
 	public Page4Navigator<Product> list(int cid,int start,int size){
 		Category category = categoryService.get(cid);
@@ -45,10 +48,23 @@ public class ProductService {
 		return productDAO.findOne(id);
 	}
 	
+
+	
 	/**
 	 * 测试用
 	 */
 	public List<Product> list(){
 		return productDAO.findAll();
+	}
+
+	/**
+	 *前端需求，提供销量和评论数量
+	 * @param product
+	 */
+	public void setSaleAndReviewNumber(Product product) {
+		int reviewCount = reviewService.getCount(product);
+		int saleCount = reviewService.getCount(product);
+		product.setReviewCount(reviewCount);
+		product.setSaleCount(saleCount);
 	}
 }

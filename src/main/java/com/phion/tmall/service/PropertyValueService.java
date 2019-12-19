@@ -67,5 +67,9 @@ public class PropertyValueService {
 	 */
 	public List<PropertyValue> listAll(){
 		return propertyValueDAO.findAll();
+	}
+
+	public List<PropertyValue> list(Product product) {
+		return propertyValueDAO.findByProductOrderByIdDesc(product);
 	} 
 }

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="include/fore/header::html(产品页)" >
+</head>
+<body>
+    <script>
+        $(function(){
+        	
+        	var pid = getUrlParms("pid");
+        	var data4vue = {
+					product: {
+						productBriefImages: null,
+						firstProductImage:null,
+						name: 'Haier/海尔 EC5002-D 50升无线遥控电热水器洗澡淋浴乡镇村可达',
+						subTitle: '三档功率可调 防电墙 安全预警技术 无线遥控',
+						originalPrice: 1899.00,
+						promotePrice: 1424.25,
+						saleCount:21,
+						reviewCount:23,
+						stock:17,
+						category:{
+							id:1
+						},
+					},
+					user:{
+						id:null,
+						name:""
+					},
+					hotWords:null,
+					reviews: [{
+						content: "不错不错真不错",
+						createDate: 19980214,
+						user: {
+							anonymousName: "j*****就"
+						},
+						
+					}, ],
+					showReview: false,
+					showDetail: true,
+					pvs:[
+						{
+							property:{
+								name:"name1"
+							},
+							value:"val1"
+						},
+						{
+							property:{
+								name:"name2"
+							},
+							value:"val2"
+						},
+						{
+							property:{
+								name:"name3"
+							},
+							value:"val3"
+						}
+					],
+					buyCount:1
+
+				};
+				var vm = new Vue({
+					el: '#workingArea',
+					data: data4vue,
+					mounted: function() {
+						this.init();
+					},
+					methods: {
+						init: function() {
+							//获取产品信息
+							uri = "product/"+pid;
+							axios.get(uri).then(function(response){
+								var res = response.data;
+								if(res.code==200){
+									vm.product = res.data.product;
+									vm.reviews = res.data.reviews;
+									vm.pvs = res.data.pvs;
+								}else if(res.code == 400){
+									alert(res.message);
+								}
+							});
+							
+							var userDiv = $("#userDiv");
+							if(userDiv){
+								//从session中加载用户信息
+								this.user.name = $("#userDiv").attr("name");
+								this.user.id = $("#userDiv").attr("uid");	
+							}
+							//alert(this.user.id);
+							var uri = "hotWords/0";
+							axios.get(uri).then(function(response){
+								var res = response.data;
+								vm.hotWords = res.data.hotWords;
+							});
+							//获取推荐分类
+							uri = "recommendCategories/0";
+							axios.get(uri).then(function(response){
+								var res = response.data;
+								vm.categories = res.data.recommendCategories;
+							});
+						},					
+						changeImg:function(event){
+							var bigImgSrc = smallImg.getAttribute("bigImageURL");
+							$(".bigImg").attr("src",bigImgSrc);
+						},
+						onMouseOverSmallImg:function(event){
+							//添加样式
+							var smallImg = event.target;
+							smallImg.style.cssText = 'border:solid 2px black';
+							//修改大图
+							changeImg(event);
+						},
+						onMouseOutSmallImg:function(event){
+							//移除样式
+							var smallImg = event.target;
+							smallImg.style.cssText = 'border:solid 2px white';
+						},
+						toggle2Detail: function() {
+							this.showDetail = true;
+							this.showReview = false;
+						},
+						toggle2Review: function() {
+							this.showDetail = false;
+							this.showReview = true;
+						},
+						increaseNum:function(){
+							if(vm.buyCount<vm.product.stock)
+								vm.buyCount++;
+						},
+						decreaseNum:function(){
+							if(vm.buyCount>0)
+								vm.buyCount--;
+						},
+					}
+
+				});
+ 
+        });
+    </script>
+
+<div id="workingArea">
+    <div th:replace="include/fore/top::html" ></div>
+    <div th:replace="include/fore/search::html" ></div>
+    <div th:replace="include/fore/product/productPage::html" ></div>
+    <!-- <div th:replace="include/fore/modal4login::html" ></div> -->
+    <div th:replace="include/fore/footer::html" ></div>
+</div>
+</body>
+</html>

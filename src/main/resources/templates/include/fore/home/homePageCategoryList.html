@@ -9,7 +9,7 @@
 				<div class="category-list-eachCategory"
 					v-for="p ,pindex in c.products" v-if="pindex<=4">
 					<div class="product-of-categoty-list">
-						<a href="#"> <img width="100%"
+						<a :href="'foreproduct?pid='+p.id"> <img width="100%"
 							:src="'img/productBrief_middle/'+p.firstProductImage.id+'.jpg'" />
 						</a>
 						<div class="productItemDesc" style="width: 90%; margin: 0 auto; margin-top: 15px;">

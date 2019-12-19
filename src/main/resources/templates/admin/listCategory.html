@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:include="include/admin/adminHeader::html('分类管理')"></head>
+<head th:include="include/admin/adminHeader::html('分类管理')">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="0">
+</head>
 <body>
 	<div th:replace="include/admin/adminNavigator::html"></div>
 	<script>
@@ -104,6 +108,7 @@
 							if(vm.edit(id)){
 								vm.toggleModal();
 		                		alert("提交成功！");
+								location.reload();
 							}else{
 		                		alert("提交失败")
 		                	}
@@ -122,10 +127,11 @@
 	<div id="workarea">
 		<br /> <br />
 		<div class="label label-info">分类管理</div>
-		<button type="button"  class="btn btn-primary addCateBt" @click="toggleModal()">
-			添加分类</button>
+		<button type="button" class="btn btn-primary addCateBt"
+			@click="toggleModal()">添加分类</button>
 		<br /> <br />
-		<table class="table table-hover table-striped table-bordered  table-condensed">
+		<table
+			class="table table-hover table-striped table-bordered  table-condensed">
 			<thead>
 				<tr class="success">
 					<th>ID</th>
@@ -138,17 +144,19 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="bean in beans" >
+				<tr v-for="bean in beans">
 					<td>{{bean.id}}</td>
 					<td><img height="40px" :src="'img/category/'+bean.id+'.jpg'" />
 					</td>
 					<td>{{bean.name}}</td>
-					<td><a :href="'admin_property_list?cid=' + bean.id " ><span class="glyphicon glyphicon-th-list"></span> </a>
-					</td>
-					<td><a :href="'admin_product_list?cid=' + bean.id "><span class="glyphicon glyphicon-shopping-cart"></span>
-					</a></td>
-					<td><a><span @click="editModal(bean.name,bean.id)" class="glyphicon glyphicon-edit"></span> </a></td>
-					<td><a><span @click="delete_(bean.id)" class="glyphicon glyphicon-trash"></span> </a></td>
+					<td><a :href="'admin_property_list?cid=' + bean.id "><span
+							class="glyphicon glyphicon-th-list"></span> </a></td>
+					<td><a :href="'admin_product_list?cid=' + bean.id "><span
+							class="glyphicon glyphicon-shopping-cart"></span> </a></td>
+					<td><a><span @click="editModal(bean.name,bean.id)"
+							class="glyphicon glyphicon-edit"></span> </a></td>
+					<td><a><span @click="delete_(bean.id)"
+							class="glyphicon glyphicon-trash"></span> </a></td>
 				</tr>
 			</tbody>
 		</table>
@@ -167,8 +175,8 @@
 						<table class="addTable">
 							<tr>
 								<td>分类名称</td>
-								<td><input @keyup.enter="submit(bean.id)" v-model.trim="bean.name"
-									type="text" class="form-control"></td>
+								<td><input @keyup.enter="submit(bean.id)"
+									v-model.trim="bean.name" type="text" class="form-control"></td>
 							</tr>
 							<tr>
 								<td>分类图片</td>
@@ -180,7 +188,8 @@
 				</div>
 				<div class="modal-footer">
 					<button data-dismiss="modal" class="btn btn-default" type="button">关闭</button>
-					<button class="btn btn-primary" @click="submit(bean.id)" type="button">提交</button>
+					<button class="btn btn-primary" @click="submit(bean.id)"
+						type="button">提交</button>
 				</div>
 			</div>
 		</div>

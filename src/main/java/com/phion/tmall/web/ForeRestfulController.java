@@ -16,8 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.HtmlUtils;
 
 import com.phion.tmall.pojo.Category;
+import com.phion.tmall.pojo.Product;
+import com.phion.tmall.pojo.PropertyValue;
+import com.phion.tmall.pojo.Review;
 import com.phion.tmall.pojo.User;
 import com.phion.tmall.service.CategoryService;
+import com.phion.tmall.service.ProductImageService;
+import com.phion.tmall.service.ProductService;
+import com.phion.tmall.service.PropertyValueService;
+import com.phion.tmall.service.ReviewService;
 import com.phion.tmall.service.UserService;
 import com.phion.tmall.util.Result;
 /**
@@ -32,6 +39,14 @@ public class ForeRestfulController {
 	@Autowired CategoryService categoryService;
 	
 	@Autowired UserService userService;
+	
+	@Autowired ProductService productService;
+	
+	@Autowired ProductImageService productImageService;
+	
+	@Autowired PropertyValueService propertyValueService;
+	
+	@Autowired ReviewService reviewService;
 	
 	/**
 	 * 获取某个用户的推荐搜索关键词
@@ -100,5 +115,30 @@ public class ForeRestfulController {
 		session.removeAttribute("user");
 		return "redirect:home";
 	}*/
+	
+	/**
+	 * 获取产品信息
+	 * @return
+	 */
+	@GetMapping("/product/{pid}")
+	public Object getProduct(@PathVariable(name="pid")int id) {
+		Product product = productService.get(id);
+		/*productImageService.fillBriefs(product);*/
+		
+		productImageService.setFirstProdutImage(product);
+		product.setProductBriefImages(productImageService.listBriefProductImages(id));
+		product.setProductDetailImages(productImageService.listDetailProductImages(id));
+		
+		List<PropertyValue> pvs = propertyValueService.list(product);
+	    List<Review> reviews = reviewService.list(product);
+	    productService.setSaleAndReviewNumber(product);//前端需求，单独写业务层一个方法，逻辑更清晰
+		
+		Map<String,Object> data = new HashMap<>();
+		data.put("product",product);
+		data.put("pvs", pvs);
+		data.put("reviews", reviews);
+	    
+		return Result.success(data);
+	}
 	
 }

@@ -345,9 +345,9 @@ registPage */
 	color: white;
 	background-color: #C40000;
 }
-F /**********************/
 
-/* loginPage */
+F /**********************/
+	/* loginPage */      
 
 
 
@@ -441,3 +441,344 @@ img.loginBackgroundImg {
 	margin: 0px auto;
 }
 /*************************/
+
+/* pageAndInfo */
+.imgAndInfo {
+	width: 1000px;
+	height: 500px;
+	margin: 0 auto;
+}
+
+.imgAndInfo .leftProductImgDiv {
+	width: 400px;
+	height: 500px;
+	float: left;
+}
+
+.imgAndInfo .bigImg {
+	width: 400px;
+	height: 400px;
+	padding: 20px;
+}
+
+.imgAndInfo .briefImageDiv {
+	height: 60px;
+	width: 340px;
+	margin: 20px auto;
+}
+
+.imgAndInfo .smallImage {
+	height: 62px;
+	width: 62px;
+	margin: 0 3px;
+	border: solid 2px white
+}
+
+.imgAndInfo .rightDetailDiv {
+	width: 530px;
+	height: 500px;
+	float: left;
+	margin-left: 30px;
+}
+
+.imgAndInfo .promoteActivityDiv img {
+	width: 530px;
+	height: 40px;
+}
+
+.imgAndInfo .productTitle {
+	color: black;
+	font-size: 16px;
+	font-weight: bold;
+	margin: 0px 10px;
+}
+
+.imgAndInfo .productSubTitle {
+	color: #DD2727;
+	font-size: 12px;
+	/* 	font-weight:bold; */
+	margin: 0px 10px;
+}
+
+.imgAndInfo .gouwujuanDiv {
+	margin-top: 5px;
+}
+
+.imgAndInfo .originalDiv {
+	margin-top: 5px;
+}
+
+.imgAndInfo .promotionDiv {
+	margin-top: 0px;
+}
+
+.imgAndInfo .productPriceDiv {
+	/* background-image: url(img/site/priceBackground.png); */
+	height: 102px;
+	padding: 10px;
+	color: #666666;
+}
+
+.imgAndInfo .originalPriceDesc {
+	color: #999999;
+	display: inline-block;
+	width: 68px;
+}
+
+.imgAndInfo .promotionPriceDesc {
+	color: #999999;
+	display: inline-block;
+	width: 68px;
+	position: relative;
+	left: 0px;
+	top: -10px;
+}
+
+.imgAndInfo .originalPriceYuan {
+	font-family: Arial;
+	font-size: 12px;
+}
+
+.imgAndInfo .originalPrice {
+	font-family: Arial;
+	font-size: 12px;
+	color: #333333;
+	text-decoration: line-through;
+}
+
+.imgAndInfo .promotionPriceYuan {
+	font-family: Arial;
+	font-size: 18px;
+	color: #C40000;
+	/*     vertical-align: top; */
+}
+
+.imgAndInfo .promotionPrice {
+	color: #c40000;
+	font-family: Arial;
+	font-size: 30px;
+	font-weight: bold;
+	/*     vertical-align: top; */
+	/*     vertical-align: middle; */
+}
+
+.imgAndInfo .productSaleAndReviewNumberDiv {
+	margin: 20px 0px;
+	border-top-style: dotted;
+	border-top-color: #C9C9C9;
+	border-top-width: 1px;
+	border-bottom-style: dotted;
+	border-bottom-color: #C9C9C9;
+	border-bottom-width: 1px;
+	padding: 10px;
+}
+
+.imgAndInfo .productSaleAndReviewNumberDiv div {
+	display: inline-block;
+	width: 49%;
+	text-align: center;
+	color: #999999;
+	font-size: 12px;
+}
+
+.redColor {
+	color: #C40000;
+}
+
+.boldWord {
+	font-weight: bold;
+}
+
+.imgAndInfo .productNumber {
+	color: #999999;
+}
+
+.imgAndInfo .productNumberSettingSpan {
+	border: 1px solid #999;
+	display: inline-block;
+	width: 43px;
+	height: 32px;
+	/* padding: 7px 0; */
+}
+
+.imgAndInfo .productNumberSetting {
+	border: 0px;
+	height: 99%;
+	width: 99%;
+}
+
+.productNumber .glyphicon {
+	font-size: 6px;
+}
+
+.productNumber .arrow {
+	display: inline-block;
+	width: 22px;
+	height: 32px;
+	vertical-align: top;
+}
+
+.productNumber .updown img {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.productNumber .updown {
+	border: 1px solid #999;
+	display: block;
+	width: 20px;
+	height: 14px;
+	text-align: center;
+	padding-top: 4px;
+}
+
+.productNumber .updownMiddle {
+	height: 4px;
+	display: block;
+}
+
+.imgAndInfo .serviceCommitment {
+	margin: 20px 0px;
+}
+
+.imgAndInfo .serviceCommitmentDesc {
+	color: #999999;
+}
+
+.imgAndInfo .serviceCommitmentLink a {
+	color: #666666;
+}
+
+.addCartButton {
+	border: 1px solid #C40000;
+	background-color: #C40000;
+	text-align: center;
+	line-height: 40px;
+	font-size: 16px;
+	/* 	font-weight:700; */
+	color: white;
+	font-family: arial;
+}
+
+.addCartButton .glyphicon {
+	font-size: 12px;
+	margin-right: 8px;
+}
+
+.buyDiv button {
+	display: inline-block;
+	margin: 0px 10px;
+	width: 180px;
+	height: 40px;
+}
+
+.buyButton {
+	border: 1px solid #C40000;
+	background-color: #FFEDED;
+	text-align: center;
+	line-height: 40px;
+	font-size: 16px;
+	/* 	font-weight:700; */
+	color: #C40000;
+	font-family: arial;
+}
+
+.categoryPictureInProductPageDiv {
+	width: 100%;
+	margin: 20px auto;
+	text-align: center;
+}
+
+/***************************/
+/* productReview */
+.productDetailDiv {
+	width: 790px;
+	margin: 40px auto;
+}
+
+.productReviewItemDate {
+	margin: 15px 0px 0px 0px;
+	color: #CCCCCC;
+}
+
+.userInfoGrayPart {
+	color: #999999;
+}
+
+.productReviewItem {
+	border-bottom: 1px solid #E3E3E3;
+	margin: 10px 0px;
+}
+
+.productReviewItem .productReviewItemDesc {
+	width: 80%;
+	display: inline-block;
+	color: #333333;
+	height: 94px;
+	margin: 5px 20px;
+	float: left;
+}
+
+.productReviewItem .productReviewItemUserInfo {
+	color: #404040;
+	margin: 5px 20px;
+	overflow: hidden;
+	padding: 20px 0;
+}
+
+.productReviewOrDetailDiv {
+	border: solid 1px lightgray;
+	text-align: center;
+	width: 90px;
+	height: 100%;
+	padding-top: 10px;
+	float: left;
+}
+
+.productReviewTopPart {
+	border: solid lightgray 1px;
+	height: 46px;
+}
+
+.productReviewDivInReview {
+	border: solid 1px #b00000;
+	color: #b10000;
+	font-weight: bold;
+}
+
+.productDetailDivInDetail {
+	border: solid 1px #b00000;
+	color: #b10000;
+	font-weight: bold;
+}
+/******************************/
+/* productDetailDIv*/
+.productReviewDiv {
+	width: 790px;
+	margin: 40px auto;
+	/* 	display:none; */
+}
+
+.productDetailTopPart {
+	border: solid lightgray 1px;
+	height: 46px;
+}
+
+.productParamterPart {
+	border: 1px solid #DFDFDF;
+	padding: 40px;
+}
+
+.productParamter {
+	color: #999999;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.productParamterList span {
+	display: block;
+	width: 220px;
+	float: left;
+	padding: 8px 0px;
+	color: #666666;
+}

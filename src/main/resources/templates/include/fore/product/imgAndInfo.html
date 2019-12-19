@@ -1,0 +1,98 @@
+<div th:fragment="html">
+	<div class="imgAndInfo">
+		<div class="leftProductImgDiv">
+
+			<img v-if="product!=null && product.firstProductImage!=null"
+				:src="'img/productBrief/'+product.firstProductImage.id+'.jpg'"
+				class="bigImg" >
+			<div class="briefImageDiv">
+				<img v-for="pi in product.productBriefImages"
+					:src="'img/productBrief_small/'+pi.id+'.jpg'"
+					@mouseover="onMouseOverSmallImg($event)"
+					@mouseout="onMouseOutSmallImg($event)"
+					:bigImageURL="'img/productBrief/'+pi.id+'.jpg'" class="smallImage">
+			</div>
+		</div>
+		<div class="rightDetailDiv">
+			<div class="productTitle">{{product.name}}</div>
+			<div class="productSubTitle">{{product.subTitle}}</div>
+			<div class="productPrice">
+				<div class="promoteActivityDiv">
+					<img src="img/juhuasuan.png" />
+				</div>
+
+				<div class="productPriceDiv">
+					<div class="gouwujuanDiv">
+						<img height="16px" src="img/site/gouwujuan.png"> <span>
+							全天猫实物商品通用</span>
+
+					</div>
+					<div class="originalDiv">
+						<span class="originalPriceDesc">价格</span> <span
+							class="originalPriceYuan">¥</span> <span class="originalPrice">
+							{{product.originalPrice}} </span>
+					</div>
+
+					<div class="promotionDiv">
+						<span class="promotionPriceDesc">促销价 </span> <span
+							class="promotionPriceYuan">¥</span> <span class="promotionPrice">
+							{{product.promotePrice}} </span>
+					</div>
+					<div class="productSaleAndReviewNumberDiv">
+						<div>
+							销量 <span class="redColor boldWord"> {{ product.saleCount
+								}}</span>
+						</div>
+						<div>
+							累计评价 <span class="redColor boldWord"> {{
+								product.reviewCount }}</span>
+						</div>
+					</div>
+
+					<div class="productNumber">
+						<span>数量</span> 
+						<span> 
+							<span class="productNumberSettingSpan"> 
+								<input class="productNumberSetting" type="text"
+								oninput = "value=value.replace(/[^\d]/g,'')"
+								 v-model:value="buyCount">
+							</span> 
+						<span class="arrow"> 
+						<a href="#nowhere" @click="increaseNum()" 
+								class="increaseNumber"> 
+								<span class="updown"> <img
+										src="img/site/increase.png">
+								</span>
+							</a> 
+							<span class="updownMiddle"> </span> 
+							<a href="#nowhere" class="decreaseNumber" @click="decreaseNum()"> 
+								
+								<span class="updown"> <img
+										src="img/site/decrease.png">
+								</span>
+							</a>
+
+						</span> 件
+						</span> <span>库存{{product.stock}}件</span>
+					</div>
+
+					<div class="serviceCommitment">
+						<span class="serviceCommitmentDesc">服务承诺</span> <span
+							class="serviceCommitmentLink"> <a href="#nowhere">正品保证</a>
+							<a href="#nowhere">极速退款</a> <a href="#nowhere">赠运费险</a> <a
+							href="#nowhere">七天无理由退换</a>
+						</span>
+					</div>
+
+					<div class="buyDiv">
+						<a class="buyLink"><button class="buyButton">立即购买</button></a> <a
+							href="#nowhere" class="addCartLink"><button
+								class="addCartButton">
+								<span class="glyphicon glyphicon-shopping-cart"></span>加入购物车
+							</button></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
