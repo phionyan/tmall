@@ -35,4 +35,24 @@ public class ProductTest {
 		System.out.println(p);
 		System.out.println("over");
 	}
+	
+	@Test
+	public void testsearch() {
+		//String keyword = "%' or '%1%'='%1";
+		String keyword = "产品";
+		List<Product> ps = productService.search(keyword, 0, 5);
+		for(Product p : ps) {
+			System.out.println(p);
+		}
+	}
+	
+	@Test
+	public void testsearchCategory() {
+		//String keyword = "%' or '%1%'='%1";
+		String keyword = "产品";
+		List<Product> ps = productService.searchCategory(13, 0, 5);
+		for(Product p : ps) {
+			System.out.println(p);
+		}
+	}
 }

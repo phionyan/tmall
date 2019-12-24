@@ -67,4 +67,40 @@ public class ProductService {
 		product.setReviewCount(reviewCount);
 		product.setSaleCount(saleCount);
 	}
+	/**
+	 * 搜索符合要求的前20个产品，暂时采用数据库模糊查询
+	 * @param keyword
+	 * @param i
+	 * @param j
+	 * @return
+	 */
+	public List<Product> search(String keyword, int start, int size) {
+		Sort sort = new Sort(Sort.Direction.DESC, "id");
+        Pageable pageable = new PageRequest(start, size, sort);
+        List<Product> products =productDAO.findByNameLike("%"+keyword+"%",pageable);
+        return products;
+	}
+	
+	/**
+	 * 搜索分类下的前20个产品
+	 * @param cid
+	 * @param start
+	 * @param size
+	 * @return
+	 */
+	public List<Product> searchCategory(int cid, int start, int size) {
+		Category category = new Category();
+		category.setId(cid);
+		Sort sort = new Sort(Sort.Direction.DESC, "id");
+        Pageable pageable = new PageRequest(start, size, sort);
+        List<Product> products =(List<Product>) productDAO.findByCategory(category, pageable);
+        return products;
+	}
+	
+
+	public void setSaleAndReviewNumber(List<Product> ps) {
+		for(Product p : ps ) {
+			setSaleAndReviewNumber(p);
+		}
+	}
 }

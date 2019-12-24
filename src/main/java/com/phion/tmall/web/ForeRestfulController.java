@@ -141,4 +141,42 @@ public class ForeRestfulController {
 		return Result.success(data);
 	}
 	
+	/**
+	 * 登录状态判断
+	 * @param session
+	 * @return
+	 */
+	@GetMapping("isLogin")
+	public Object isLogin( HttpSession session) {
+	    User user =(User)  session.getAttribute("user");
+	    if(null!=user)
+	        return Result.success();
+	    return Result.fail("未登录");
+	}
+	
+	/**
+	 * searchPage.html 中的请求提交后，导致ForeRESTController.search()方法被调用
+		1. 获取参数keyword
+		2. 根据keyword进行模糊查询，获取满足条件的前20个产品
+		3. 为这些产品设置销量和评价数量
+		4. 返回这个产品集合
+	 */
+	@GetMapping("foresearch")
+	public Object search( String keyword){
+	    if(null==keyword)
+	        keyword = "";
+	    
+	    List<Product> ps= productService.search(keyword,0,20);
+	    productImageService.setFirstProdutImages(ps);
+	    productService.setSaleAndReviewNumber(ps);
+	    return ps;
+	}
+	
+	@GetMapping("/forecategory/{cid}")
+	public Object searchCategory( @PathVariable(name="cid")int cid){
+		List<Product> ps= productService.searchCategory(cid,0,20);
+	    productImageService.setFirstProdutImages(ps);
+	    productService.setSaleAndReviewNumber(ps);
+	    return ps;
+	}
 }

@@ -347,7 +347,7 @@ registPage */
 }
 
 F /**********************/
-	/* loginPage */      
+	/* loginPage */        
 
 
 
@@ -782,3 +782,91 @@ img.loginBackgroundImg {
 	padding: 8px 0px;
 	color: #666666;
 }
+
+/***********************/
+/* modal4login */
+.loginDivInProductPageModalDiv {
+	width: 350px;
+}
+
+.loginDivInProductPageModalDiv a {
+	color: #999;
+}
+
+/********************/
+/* productBySearch */
+.product-of-search {
+	width: 225px;
+	height: 345px;
+	background-color: white;
+	margin: 5px;
+	float: left;
+	border: 3px solid red;
+}
+
+.productInfo {
+	font-size: 12px;
+	font-family: Arial;
+	border-top: solid 1px #EEEEEE;
+	color: #999999;
+	float: left;
+	margin: 12px 5px;
+}
+
+span .monthDeal, .productReview {
+	display: inline-block;
+	width: 90px;
+	height: 30px;
+	padding-top: 5px;
+	padding-left: 5px;
+}
+
+.productInfo .productDealNumber {
+	font-weight: bold;
+	color: #B57C5B;
+}
+
+.productReviewNumber {
+	font-weight: bold;
+	color: #3388BB;
+}
+
+.productLink {
+	margin: 10px 0px;
+	color: #333333;
+	font: 0.8em;
+	display: block;
+}
+
+.productLink:hover {
+	text-decoration: underline;
+	color: #C40000;
+}
+
+.tmallLink {
+	margin: 10px 0px;
+	color: #999999;
+	font: 0.8em;
+	display: block;
+	text-decoration: underline;
+}
+
+.productPrice {
+	/* font-size: 20px; */
+	color: #CC0000;
+	display: block;
+	padding-left: 4px;
+}
+.noMatch {
+	font-size: 20px;
+	width: 200px;
+	margin: 100px auto;
+	color: #888;
+}
+
+.searchResultDiv{
+    max-width: 1013px;
+    margin: 10px auto;
+    min-height: 300px;
+}
+/**********************/

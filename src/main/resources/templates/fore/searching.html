@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:include="include/fore/header::html('搜索页')" ></head>
+    <script>
+        $(function(){
+            var cid = getUrlParms("cid");
+            var data4Vue = {
+                    uri:'foresearch',
+                    products:[],
+                    user:{
+                    	id:null,
+    					name:""
+                    },
+                    hotWords:[]
+            };
+            //ViewModel
+            var vm = new Vue({
+                el: '#workingArea',
+                data: data4Vue,
+                mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
+                    this.init();
+                },       
+                methods: {
+                	init(){
+                		var searchInput = $(".searchInput");
+                		searchInput.val(keyword)
+                		
+                		
+                		var userDiv = $("#userDiv");
+						if(userDiv){
+							//从session中加载用户信息
+							this.user.name = $("#userDiv").attr("name");
+							this.user.id = $("#userDiv").attr("uid");	
+						}
+						//alert(this.user.id);
+						var url = "hotWords/0";
+						axios.get(url).then(function(response){
+							var res = response.data;
+							vm.hotWords = res.data.hotWords;
+						});
+                		
+						url =  this.uri+"?cid="+cid;
+                        axios.get(url).then(function(response) {
+                        	 vm.products = response.data;
+                             
+                        });
+                    }
+                }
+            });                
+        })
+    </script>
+    <body>
+        <div id="workingArea">
+            <div th:replace="include/fore/top::html" ></div>   
+            <div th:replace="include/fore/simpleSearch::html" ></div>  
+            <div th:replace="include/fore/searchingPage::html" ></div>
+            <div th:replace="include/fore/footer::html" ></div>
+        </div>
+    </body>
+</html>

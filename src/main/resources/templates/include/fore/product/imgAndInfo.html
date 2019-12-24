@@ -30,13 +30,13 @@
 					<div class="originalDiv">
 						<span class="originalPriceDesc">价格</span> <span
 							class="originalPriceYuan">¥</span> <span class="originalPrice">
-							{{product.originalPrice}} </span>
+							{{product.originalPrice|formatMoneyFilter}} </span>
 					</div>
 
 					<div class="promotionDiv">
 						<span class="promotionPriceDesc">促销价 </span> <span
 							class="promotionPriceYuan">¥</span> <span class="promotionPrice">
-							{{product.promotePrice}} </span>
+							{{product.promotePrice|formatMoneyFilter}} </span>
 					</div>
 					<div class="productSaleAndReviewNumberDiv">
 						<div>
@@ -85,11 +85,15 @@
 					</div>
 
 					<div class="buyDiv">
-						<a class="buyLink"><button class="buyButton">立即购买</button></a> <a
-							href="#nowhere" class="addCartLink"><button
-								class="addCartButton">
-								<span class="glyphicon glyphicon-shopping-cart"></span>加入购物车
-							</button></a>
+						<a class="buyLink">
+							<button class="buyButton" @click="buy()">立即购买</button>
+						</a> 
+						<a href="#nowhere" class="addCartLink">
+							<button @click="addCart()" class="addCartButton">
+								<span class="glyphicon glyphicon-shopping-cart">
+								</span>加入购物车
+							</button>	
+						</a>
 					</div>
 				</div>
 			</div>

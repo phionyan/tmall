@@ -101,7 +101,7 @@
 							});
 						},					
 						changeImg:function(event){
-							var bigImgSrc = smallImg.getAttribute("bigImageURL");
+							var bigImgSrc = event.target.getAttribute("bigImageURL");
 							$(".bigImg").attr("src",bigImgSrc);
 						},
 						onMouseOverSmallImg:function(event){
@@ -109,7 +109,7 @@
 							var smallImg = event.target;
 							smallImg.style.cssText = 'border:solid 2px black';
 							//修改大图
-							changeImg(event);
+							vm.changeImg(event);
 						},
 						onMouseOutSmallImg:function(event){
 							//移除样式
@@ -132,6 +132,56 @@
 							if(vm.buyCount>0)
 								vm.buyCount--;
 						},
+						isLogin:function(){
+							var uri = "isLogin";
+							axios.get(uri).then(function(response){
+								var res = response.data;
+								if(res.code==200){
+									return true;
+								}else if(res.code == 400){
+									//alert(res.message);
+									return false;
+								}
+							});
+						},
+						buy:function(){	
+							if(!vm.isLogin()){
+								$("#loginModal").modal('show');
+							}
+						},
+						addCart:function(){
+							if(!vm.isLogin()){
+								$("#loginModal").modal('show');
+							}
+						},
+						login : function() {
+							var url = "user_login";
+							if (0 == this.user.name.length) {
+								$("span.errorMessage").html("请输入用户名");
+								$("div.loginErrorMessageDiv").css("visibility",
+										"visible");
+								return;
+							}
+							if (0 == this.user.password.length) {
+								$("span.errorMessage").html("请输入密码");
+								$("div.loginErrorMessageDiv").css("visibility",
+										"visible");
+								return;
+							}
+
+							axios.post(url, this.user).then(
+									function(response) {
+								var result = response.data;
+								if (result.code == 200) {
+									location.href = "foreproduct?pid="+pid;
+								} else if (result.code == 400) {
+									$("span.errorMessage").html(
+											result.message);
+									$("div.loginErrorMessageDiv").css(
+											"visibility", "visible");
+								}
+							});
+						}
 					}
 
 				});
@@ -143,7 +193,7 @@
     <div th:replace="include/fore/top::html" ></div>
     <div th:replace="include/fore/search::html" ></div>
     <div th:replace="include/fore/product/productPage::html" ></div>
-    <!-- <div th:replace="include/fore/modal4login::html" ></div> -->
+    <div th:replace="include/fore/modal4login::html" ></div>
     <div th:replace="include/fore/footer::html" ></div>
 </div>
 </body>

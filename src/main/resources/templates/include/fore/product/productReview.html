@@ -25,4 +25,16 @@
 
 		</div>
 	</div>
+	<div class="productReviewDiv" v-if="reviews.length==0" v-show="showReview">
+		<div class="productReviewTopPart">
+			<div class="productReviewOrDetailDiv productDetailDivInReview"
+				@click="toggle2Detail">商品详情</div>
+			<div class="productReviewOrDetailDiv productReviewDivInReview">
+				累计评价&nbsp;<span class="productReviewTopReviewLinkNumber"
+					style="color: #3355B9;">{{product.reviewCount}}</span>
+			</div>
+		</div>
+		
+	</div>
+	
 </div>

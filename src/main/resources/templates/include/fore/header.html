@@ -47,6 +47,35 @@
 	        return vals;
 	    }
     }	
+	
+	function onsearch(){
+		var text = $("#searchInput").val();
+		alert("search"+text);
+	}
+	
+	function formatMoney(num){
+        num = new String(num);
+        num = num.toString().replace(/\$|\,/g,'');
+        if(isNaN(num))
+            num = "0";
+        sign = (num == (num = Math.abs(num)));
+        num = Math.floor(num*100+0.50000000001);
+        cents = num%100;
+        num = Math.floor(num/100).toString();
+        if(cents<10)
+            cents = "0" + cents;
+        for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
+            num = num.substring(0,num.length-(4*i+3))+','+
+                num.substring(num.length-(4*i+3));
+        return (((sign)?'':'-') + num + '.' + cents);
+    }
+	
+    Vue.filter("formatMoneyFilter", function(value){
+        return formatMoney(value);
+    });
+    
+    
+    
 	</script>	
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 	
 	<title th:text="${title}" ></title>
