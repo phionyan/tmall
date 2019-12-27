@@ -8,19 +8,26 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.HtmlUtils;
 
 import com.phion.tmall.pojo.Category;
+import com.phion.tmall.pojo.Order;
+import com.phion.tmall.pojo.OrderItem;
 import com.phion.tmall.pojo.Product;
 import com.phion.tmall.pojo.PropertyValue;
 import com.phion.tmall.pojo.Review;
 import com.phion.tmall.pojo.User;
 import com.phion.tmall.service.CategoryService;
+import com.phion.tmall.service.OrderItemService;
+import com.phion.tmall.service.OrderService;
 import com.phion.tmall.service.ProductImageService;
 import com.phion.tmall.service.ProductService;
 import com.phion.tmall.service.PropertyValueService;
@@ -47,6 +54,10 @@ public class ForeRestfulController {
 	@Autowired PropertyValueService propertyValueService;
 	
 	@Autowired ReviewService reviewService;
+	
+	@Autowired OrderService orderService;
+	
+	@Autowired OrderItemService orderItemService;
 	
 	/**
 	 * 获取某个用户的推荐搜索关键词
@@ -97,9 +108,11 @@ public class ForeRestfulController {
 	 */
 	@PostMapping("/user_login")
 	public Object userLogin(@RequestBody User user,HttpSession session) {
-	    user.setName(HtmlUtils.htmlEscape(user.getName()));
+	    System.out.println("userLogin");
+		user.setName(HtmlUtils.htmlEscape(user.getName()));
 	 
 	    user =userService.get(user.getName(),user.getPassword());
+	    //user = userService.get("phion","123456");
 	    if(null==user){
 	        String message ="账号密码错误";
 	        return Result.fail(message);
@@ -149,6 +162,12 @@ public class ForeRestfulController {
 	@GetMapping("isLogin")
 	public Object isLogin( HttpSession session) {
 	    User user =(User)  session.getAttribute("user");
+	   /* try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
 	    if(null!=user)
 	        return Result.success();
 	    return Result.fail("未登录");
@@ -172,11 +191,134 @@ public class ForeRestfulController {
 	    return ps;
 	}
 	
-	@GetMapping("/forecategory/{cid}")
+	@GetMapping("/foreCategory/{cid}")
 	public Object searchCategory( @PathVariable(name="cid")int cid){
 		List<Product> ps= productService.searchCategory(cid,0,20);
 	    productImageService.setFirstProdutImages(ps);
 	    productService.setSaleAndReviewNumber(ps);
 	    return ps;
 	}
+	/**
+	 * 如果有订单项id，则判断为已生成订单购买；如果没有，则执行加入购物车操作
+	 * 
+	 * @param num
+	 * @param pid
+	 * @param session
+	 * @param oiid
+	 * @return
+	 */
+	/*@GetMapping("/forebuyone")
+	public Object buyOne(int num,int pid,HttpSession session,
+			@RequestParam(name="oiid",defaultValue="0")int oiid) {
+		if(oiid!=0) {
+			//购买，生成订单
+			
+		}
+		//加入购物车
+		return buyoneAndAddCart(pid,num,session);
+	}*/
+	/**
+	 * 立即购买（加入购物车)并跳转
+	 * @param num
+	 * @param pid
+	 * @param session
+	 * @return
+	 */
+	@GetMapping("/forebuyone")
+	public Object buyOne(int num,int pid,HttpSession session) {
+		return buyoneAndAddCart(pid,num,session);
+	}
+	
+	/**
+	 * 1、获取产品数量，如果足够方可购买
+	 * 2、查询用户登录状态，获取当前用户
+	 * 3、如果还有相同购物项，合并，否则加入购物车（生成orderItem）
+	 * 4、返回订单项id供前端调用
+	 * @param pid
+	 * @param num
+	 * @param session
+	 * @return
+	 */
+	private Object buyoneAndAddCart(int pid, int num, HttpSession session) {
+		//核查商品库存
+		Product product = productService.get(pid);
+		if(product.getStock()<num) return Result.fail("库存不足");
+		//核查用户
+		User user = (User) session.getAttribute("user");
+		if(user==null) return Result.fail("用户未登录");
+		int oiid = 0;
+		//如果已有相同订单项，合并
+		boolean found = false;
+	    List<OrderItem> ois = orderItemService.listByUser(user);
+	    for (OrderItem oi : ois) {
+	        if(oi.getProduct().getId()==product.getId()){
+	            oi.setNumber(oi.getNumber()+num);
+	            orderItemService.update(oi);
+	            found = true;
+	            oiid = oi.getId();
+	            break;
+	        }
+	    }
+		if(!found) {
+			//创建订单项（加入购物车）
+			OrderItem orderItem = new OrderItem();
+			orderItem.setProduct(product);
+			orderItem.setUser(user);
+			orderItem.setNumber(num);
+			orderItemService.add(orderItem);
+			oiid = orderItem.getId();
+		}
+		//返回订单项id
+		Map<String,Object> data = new HashMap();
+		data.put("oiid", oiid);
+		return Result.success(data);
+	}
+	
+	/**
+	 * 生成订单
+	 * 1、找到所有的订单项并计算总价
+	 * 2、读取
+	 * @param oiid
+	 * @param session
+	 * @return
+	 */
+	@GetMapping("forebuy")
+	 public Object buy(String[] oiid,HttpSession session){
+	     List<OrderItem> orderItems = new ArrayList<>();
+	     float total = 0;//总价
+	     
+	     Map oisInfo = orderItemService.listOrderItemsInfo(oiid);
+	     orderItems = (List<OrderItem>) oisInfo.get("orderItems");
+	     total = (float) oisInfo.get("total");
+	     
+	     productImageService.setFirstProdutImagesOnOrderItems(orderItems);
+	 
+	     session.setAttribute("ois", orderItems);
+	 
+	     Map<String,Object> map = new HashMap<>();
+	     map.put("orderItems", orderItems);
+	     map.put("total", total);
+	     return Result.success(map);
+	 }
+
+	@GetMapping("forecart")
+	public Object cart(HttpSession session) {
+	    User user =(User)  session.getAttribute("user");
+	    System.out.println(user);
+	    List<OrderItem> ois = orderItemService.listByUser(user);
+	    productImageService.setFirstProdutImagesOnOrderItems(ois);
+	    Map<String,Object> map = new HashMap<>();
+	    map.put("orderItems", ois);
+	    return Result.success(map);
+	}
+	
+	@GetMapping("foredeleteOrderItem")
+	public Object deleteOrderItem(HttpSession session,int oiid) {
+		User user =(User)  session.getAttribute("user");
+	    if(null==user)
+	        return Result.fail("未登录");
+	    orderItemService.delete(oiid);
+	    return Result.success();
+	}
+
 }

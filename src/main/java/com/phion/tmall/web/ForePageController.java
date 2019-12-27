@@ -62,4 +62,18 @@ public class ForePageController {
     public String searchCategory(){
         return "fore/searchingCategory";
     }
+	
+	/**
+	 * 支付页面
+	 * @return
+	 */
+	@GetMapping("/buy")
+    public String buy(){
+        return "fore/buy";
+    }
+	
+	@GetMapping("/cart")
+	public String cart() {
+		return "fore/cart";
+	}
 }

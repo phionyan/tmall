@@ -21,6 +21,7 @@
 						category:{
 							id:1
 						},
+						oiid:''
 					},
 					user:{
 						id:null,
@@ -133,26 +134,55 @@
 								vm.buyCount--;
 						},
 						isLogin:function(){
-							var uri = "isLogin";
-							axios.get(uri).then(function(response){
-								var res = response.data;
-								if(res.code==200){
-									return true;
-								}else if(res.code == 400){
-									//alert(res.message);
-									return false;
-								}
-							});
+							/* if(vm.user.name==null||vm.user.password==null){
+								return false;
+							}
+							return true; */
 						},
 						buy:function(){	
-							if(!vm.isLogin()){
-								$("#loginModal").modal('show');
-							}
+							 //检查登录状态
+							 var uri = "isLogin";
+							 axios.get(uri).then(function(response){
+								var res = response.data;
+								if(res.code!=200){
+									$("#loginModal").modal('show');
+									return;
+								}
+							 });
+							 //加入购物车
+							 var pid = vm.product.id;
+				             var num= vm.buyCount;
+				             var url =  "forebuyone?pid="+pid+"&num="+num;
+				             axios.get(url).then(function(response) {
+				            	 var res = response.data;
+				            	 if(res.code==200){
+				            		 //加入成功后跳转至购买界面
+				            		 vm.product.oiid = res.data.oiid;
+				            		 location.href="buy?oiid="+vm.product.oiid;
+				            	 }
+				             });
 						},
-						addCart:function(){
-							if(!vm.isLogin()){
-								$("#loginModal").modal('show');
-							}
+						addCart:function(type){
+							 //检查登录状态
+							 var uri = "isLogin";
+							 axios.get(uri).then(function(response){
+								var res = response.data;
+								if(res.code!=200){
+									$("#loginModal").modal('show');
+									return;
+								}
+							 });
+							 //加入购物车
+							 var pid = vm.product.id;
+				             var num= vm.buyCount;
+				             var url =  "forebuyone?pid="+pid+"&num="+num;
+				             axios.get(url).then(function(response) {
+				            	 var res = response.data;
+				            	 if(res.code==200){
+				            		 //加入成功提醒
+				            		 alert("已成功加入购物车");
+				            	 }
+				             });
 						},
 						login : function() {
 							var url = "user_login";
@@ -169,7 +199,9 @@
 								return;
 							}
 
-							axios.post(url, this.user).then(
+							axios.post(url, this.user,{headers:{
+								'Content-Type':'application/json'
+							}}).then(
 									function(response) {
 								var result = response.data;
 								if (result.code == 200) {
@@ -177,6 +209,12 @@
 								} else if (result.code == 400) {
 									$("span.errorMessage").html(
 											result.message);
+									$("div.loginErrorMessageDiv").css(
+											"visibility", "visible");
+								}
+								else{
+									$("span.errorMessage").html(
+											"登录异常");
 									$("div.loginErrorMessageDiv").css(
 											"visibility", "visible");
 								}

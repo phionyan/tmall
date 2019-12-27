@@ -347,7 +347,7 @@ registPage */
 }
 
 F /**********************/
-	/* loginPage */        
+	/* loginPage */          
 
 
 
@@ -857,6 +857,7 @@ span .monthDeal, .productReview {
 	display: block;
 	padding-left: 4px;
 }
+
 .noMatch {
 	font-size: 20px;
 	width: 200px;
@@ -864,9 +865,405 @@ span .monthDeal, .productReview {
 	color: #888;
 }
 
-.searchResultDiv{
-    max-width: 1013px;
-    margin: 10px auto;
-    min-height: 300px;
+.searchResultDiv {
+	max-width: 1013px;
+	margin: 10px auto;
+	min-height: 300px;
 }
 /**********************/
+/*buyPage*/
+.buyPageDiv {
+	margin: 20px auto;
+	max-width: 1013px;
+}
+
+.address {
+	margin: 20px 5px;
+	text-align: left;
+}
+
+.addressTip, .productListTip {
+	color: #333333;
+	font-size: 16px;
+	font-weight: bold;
+	text-align: left;
+	margin-bottom: 30px;
+}
+
+.addressTable {
+	margin: 20px 20px;
+	width: 600px;
+}
+
+.addressTable .firstColumn {
+	width: 100px;
+}
+
+.addressTable td {
+	color: #333333;
+	text-align: right;
+	vertical-align: top;
+	padding-right: 5px;
+	text-align: left;
+	height: 30px;
+	font-size: 12px;
+}
+
+.redStar {
+	color: red;
+	font-size: 8px;
+}
+
+.addressTable td input {
+	border: 1px solid #AFAFAF;
+	width: 200px;
+}
+
+.addressTable td textarea {
+	border: 1px solid #AFAFAF;
+	margin-bottom: 10px;
+	width: 400px;
+}
+
+.tmallbuy {
+	width: 15px;
+}
+
+.marketLink {
+	color: black;
+	font-size: 12px;
+	font-family: Arial;
+	font-weight: normal;
+}
+
+.marketLink:hover {
+	color: black;
+	font-size: 12px;
+	text-decoration: underline;
+	font-family: Arial;
+	font-weight: normal;
+}
+
+.wangwangGif {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	/* background-image: url(../../img/site/wangwang.gif); */
+	background-repeat: no-repeat;
+	background-color: transparent;
+	background-attachment: scroll;
+	background-position: -83px -0px;
+	position: relative;
+	top: 8px;
+	left: 2px;
+}
+
+.productListTable {
+	width: 100%;
+	border-collapse: separate;
+}
+
+.productListTable th {
+	color: #999999;
+	font-family: Arial;
+	font-weight: normal;
+	font-size: 12px;
+	text-align: center;
+	padding-bottom: 5px;
+}
+
+.productListTableFirstColumn {
+	text-align: left;
+}
+
+.productListTable .rowborder td {
+	background-color: #b2d1ff;
+	border-right: 2px solid #fff;
+	height: 3px;
+}
+
+.orderItemImg {
+	width: 50px;
+	height: 50px;
+	border: 1px solid #E9E9E9;
+}
+
+.orderItemTR td {
+	padding: 10px 0px;
+}
+
+.orderItemProductLink {
+	color: #666666;
+	display: block;
+}
+
+.orderItemProductLink:hover {
+	color: #666666;
+	text-decoration: underline;
+}
+
+.orderItemProductInfo img {
+	height: 16px;
+}
+
+.orderItemProductPrice, .orderItemProductNumber {
+	color: #000000;
+}
+
+.orderItemUnitSum {
+	color: #CC0000;
+	font-weight: bold;
+}
+
+.orderItemTR td {
+	border-bottom: 1px solid #E5E5E5;
+}
+
+.productListTableTbody td {
+	text-align: center;
+	font-size: 12px;
+}
+
+.productListTableTbody  .orderItemFirstTD {
+	text-align: left;
+}
+
+.productListTableTbody  .orderItemProductInfo {
+	text-align: left;
+}
+
+.orderItemFirstTD, .orderItemLastTD {
+	border-bottom: 0px solid black;
+}
+
+.orderItemDeliveryLabel {
+	color: #666666;
+	font-family: Arial;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.orderItemDeliverySelect {
+	width: 100px;
+	height: 23px;
+}
+
+.orderItemSumDiv span {
+	color: #999999;
+}
+
+.orderItemSumDiv {
+	padding: 20px;
+	border-top: 2px solid #B4D0FF;
+	background-color: #F2F6FF;
+	height: 50px;
+}
+
+textarea .leaveMessageTextarea {
+	border: 1px solid #FFAD35;
+	width: 250px;
+	height: 60px;
+	resize: none;
+}
+
+.leaveMessageText {
+	display: inilne-block;
+	margin-right: 10px;
+	float: left;
+}
+
+.leaveMessageTextareaSpan {
+	display: inilne-block;
+}
+
+.orderItemTotalSumDiv {
+	margin: 40px;
+	height: 40px;
+}
+
+.orderItemTotalSumDiv span {
+	color: #999999;
+}
+
+.orderItemTotalSumSpan {
+	color: #C40000;
+	font-size: 22px;
+	font-weight: bold;
+	border-bottom: 1px dotted #F2F6FF;
+}
+
+.submitOrderDiv {
+	height: 40px;
+	margin: 20px 0px;
+}
+
+.submitOrderDiv .submitOrderButton {
+	border: 1px solid #C40000;
+	background-color: #C40000;
+	text-align: center;
+	line-height: 40px;
+	font-size: 14px;
+	font-weight: 700;
+	color: white;
+	float: right;
+	display: inline-block;
+	margin: 0px 10px;
+	width: 180px;
+	height: 40px;
+}
+/***************/
+/* cartPage */
+div.cartDiv {
+	max-width: 1013px;
+	margin: 10px auto;
+	color: black;
+}
+
+span.cartTitlePrice {
+	color: #C40000;
+	font-size: 14px;
+	font-weight: bold;
+	margin-left: 5px;
+	margin-right: 3px;
+}
+
+div.cartTitle button {
+	background-color: #AAAAAA;
+	border: 1px solid #AAAAAA;
+	color: white;
+	width: 53px;
+	height: 25px;
+	border-radius: 2px;
+}
+
+table.cartProductTable {
+	width: 100%;
+	font-size:12px;
+}
+
+table.cartProductTable th {
+	font-weight: normal;
+	color: #3C3C3C;
+	padding: 20px 20px;
+}
+
+img.cartProductImg {
+	padding: 1px;
+	border: 1px solid #EEEEEE;
+	width: 80px;
+	height: 80px;
+}
+
+a.cartProductLink {
+	color: #3C3C3C;
+}
+
+a.cartProductLink:hover {
+	color: #C40000;
+	text-decoration: underline;
+}
+
+div.cartProductLinkOutDiv {
+	position: relative;
+	height: 80px;
+}
+
+div.cartProductLinkInnerDiv {
+	position: absolute;
+	bottom: 0;
+	height: 20px;
+}
+
+tr.cartProductItemTR td {
+	padding: 20px 20px;
+}
+
+tr.cartProductItemTR {
+	border: 1px solid #CCCCCC;
+}
+
+span.cartProductItemOringalPrice {
+	text-decoration: line-through;
+	color: #9C9C9C;
+	display: block;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+span.cartProductItemPromotionPrice {
+	font-family: Arial;
+	font-size: 14px;
+	font-weight: bold;
+	color: #C40000;
+}
+
+span.cartProductItemSmallSumPrice {
+	font-family: Arial;
+	font-size: 14px;
+	font-weight: bold;
+	color: #C40000;
+}
+
+div.cartProductChangeNumberDiv {
+	border: solid 1px #E5E5E5;
+	width: 80px;
+}
+
+div.cartProductChangeNumberDiv input {
+	border: solid 1px #AAAAAA;
+	width: 42px;
+	display: inline-block;
+}
+
+div.cartProductChangeNumberDiv a {
+	text-decoration: none;
+}
+
+div.cartProductChangeNumberDiv a {
+	width: 14px;
+	display: inline-block;
+	text-align: center;
+	color: black;
+	text-decoration: none;
+}
+
+img.cartProductItemIfSelected, img.selectAllItem {
+	cursor: pointer;
+}
+
+div.cartFoot {
+	background-color: #E5E5E5;
+	line-height: 50px;
+	margin: 20px 0px;
+	color: black;
+	padding-left: 20px;
+}
+
+span.cartSumNumber {
+	color: #C40000;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+span.cartSumPrice {
+	color: #C40000;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+div.cartFoot button {
+	background-color: #AAAAAA;
+	border: 0px solid #AAAAAA;
+	color: white;
+	height: height%;
+	width: 120px;
+	height: 50px;
+	font-size: 20px;
+	text-align: center;
+	/* 	border-radius: 2px; */
+}
+
+div.boughtDiv {
+	max-width: 1013px;
+	margin: 10px auto;
+}

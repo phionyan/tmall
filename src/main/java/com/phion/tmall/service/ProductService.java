@@ -93,7 +93,7 @@ public class ProductService {
 		category.setId(cid);
 		Sort sort = new Sort(Sort.Direction.DESC, "id");
         Pageable pageable = new PageRequest(start, size, sort);
-        List<Product> products =(List<Product>) productDAO.findByCategory(category, pageable);
+        List<Product> products =productDAO.findByCategory(category, pageable).getContent();
         return products;
 	}
 	

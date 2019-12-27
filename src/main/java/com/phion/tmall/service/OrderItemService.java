@@ -1,6 +1,9 @@
 package com.phion.tmall.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.phion.tmall.dao.OrderItemDAO;
 import com.phion.tmall.pojo.Order;
 import com.phion.tmall.pojo.OrderItem;
+import com.phion.tmall.pojo.User;
 
 @Service
 public class OrderItemService {
@@ -72,5 +76,27 @@ public class OrderItemService {
 
 	private List<OrderItem> listByOrder(Order order) {
 		return orderItemDAO.findByOrderOrderByIdDesc(order);
-	}	
+	}
+	
+	public Map<String,Object> listOrderItemsInfo(String[] oiids){
+		Map<String,Object> orderItemsInfo = new HashMap<String, Object>();
+		float total = 0;
+		List<OrderItem> orderItems = new ArrayList<OrderItem>();
+		for (String strid : oiids) {
+	         int id = Integer.parseInt(strid);
+	         OrderItem oi= get(id);
+	         total +=oi.getProduct().getPromotePrice()*oi.getNumber();
+	         orderItems.add(oi);
+	     }
+		
+		orderItemsInfo.put("orderItems", orderItems);
+		orderItemsInfo.put("total", total);
+		return orderItemsInfo;
+	}
+
+	public List<OrderItem> listByUser(User user) {
+		
+		return orderItemDAO.findByUserOrderByIdDesc(user);
+	}
+	
 }

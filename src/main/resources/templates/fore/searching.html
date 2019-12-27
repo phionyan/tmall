@@ -3,7 +3,7 @@
     <head th:include="include/fore/header::html('搜索页')" ></head>
     <script>
         $(function(){
-            var cid = getUrlParms("cid");
+            var keyword = getUrlParms("keyword");
             var data4Vue = {
                     uri:'foresearch',
                     products:[],
@@ -39,7 +39,7 @@
 							vm.hotWords = res.data.hotWords;
 						});
                 		
-						url =  this.uri+"?cid="+cid;
+						url =  this.uri+"?keyword="+keyword;
                         axios.get(url).then(function(response) {
                         	 vm.products = response.data;
                              

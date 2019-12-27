@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:include="include/fore/header::html(支付页)" ></head>
+    <script type="text/javascript">
+    $(function(){
+        var oiid = getUrlParms("oiid");
+        var data4Vue = {
+                uri:'forebuy',
+                total:0,
+                orderItems:[],
+                order:{address:'',post:'',receiver:'',mobile:'',userMessage:''},
+                showUserMsg:false
+        };
+        //ViewModel
+        var vm = new Vue({
+            el: '#workingArea',
+            data: data4Vue,
+            mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
+                this.init();
+            },       
+            methods: {     
+            	init:function(){
+            		/* alert("??"); */
+                    var url =  this.uri+"?oiid="+oiid;
+                    axios.get(url).then(function(response) {
+                        var result = response.data;
+                        vm.total = result.data.total;
+                        vm.orderItems = result.data.orderItems;
+                    
+                    });
+                },
+                submitOrder:function(){
+                    var url =  "forecreateOrder";
+                    //提交订单信息
+                    axios.post(url,this.order).then(function(response) {
+                        var result = response.data;
+                        var oid = result.data.oid;
+                        var total = result.data.total;
+                        location.href="alipay?oid="+oid+"&total="+total;
+                    });                    
+                } ,
+                show:function(){
+                	vm.showUserMsg=true;
+                }
+            }
+        });                
+         
+    })
+    </script>
+    <body>
+        <div id="workingArea">
+            <!-- <div th:replace="include/fore/top::html" ></div>   
+            <div th:replace="include/fore/search::html" ></div> -->
+            <div th:replace="include/fore/cart/buyPage::html" ></div>  
+            <!-- <div th:replace="include/fore/footer::html" ></div> -->
+        </div>
+    </body>
+</html>
