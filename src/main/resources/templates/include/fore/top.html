@@ -2,6 +2,7 @@
 	<div id="sessionTestDiv" th:if="${session!=null}">
 		<div id="userTestDiv" th:if="${session.user!=null}">
 			<div id="userDiv" style="display:none;" th:attr="name=${session.user.name},uid=${session.user.id}">
+				
 			</div>
 		</div>
 	</div>
@@ -27,7 +28,10 @@
 				<a>我的订单</a> <a href="cart">
 					<div style="display: inline;">
 						<span style="color: #C40000; margin: 0px;"
-							class=" glyphicon glyphicon-shopping-cart"></span> 购物车0件
+							class=" glyphicon glyphicon-shopping-cart"></span> 
+							<span th:if="${session!=null&&session.cartTotalItemNumber!=null}">购物车[[${session.cartTotalItemNumber}]]件</span>
+							<span th:if="${session==null||session.cartTotalItemNumber==null}">购物车0件</span>
+						
 					</div>
 				</a>
 			</div>

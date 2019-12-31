@@ -8,15 +8,19 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.phion.tmall.dao.OrderDAO;
 import com.phion.tmall.pojo.Order;
+import com.phion.tmall.pojo.OrderItem;
 import com.phion.tmall.util.Page4Navigator;
 
 @Service
 public class OrderService {
 	
 	@Autowired OrderDAO orderDAO;
+	@Autowired OrderItemService orderItemService;
 	
 	public Page4Navigator<Order> list(int start, int size) {
 		Sort sort = new Sort(Sort.Direction.DESC, "id");
@@ -24,6 +28,23 @@ public class OrderService {
 		Page pageFromJPA =orderDAO.findAll(pageable);
 		return new Page4Navigator<Order>(pageFromJPA);
 	}
+	
+	//创建订单，业务方法
+	@Transactional(propagation= Propagation.REQUIRED,rollbackForClassName="Exception")
+    public float createOrder(Order order, List<OrderItem> ois) {
+        float total = 0;
+        add(order);
+ 
+        if(false)
+            throw new RuntimeException();
+ 
+        for (OrderItem oi: ois) {
+            oi.setOrder(order);
+			orderItemService.update(oi);
+            total+=oi.getProduct().getPromotePrice()*oi.getNumber();
+        }
+        return total;
+    } 
 	
 	public List<Order> list(){
 		Sort sort = new Sort(Sort.Direction.ASC,"id");

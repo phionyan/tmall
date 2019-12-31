@@ -96,7 +96,7 @@ public class OrderItemService {
 
 	public List<OrderItem> listByUser(User user) {
 		
-		return orderItemDAO.findByUserOrderByIdDesc(user);
+		return orderItemDAO.findByUserAndOrderIsNull(user);
 	}
 	
 }

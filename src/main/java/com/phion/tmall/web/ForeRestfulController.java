@@ -1,20 +1,20 @@
 package com.phion.tmall.web;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.math.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.HtmlUtils;
 
@@ -33,6 +33,7 @@ import com.phion.tmall.service.ProductService;
 import com.phion.tmall.service.PropertyValueService;
 import com.phion.tmall.service.ReviewService;
 import com.phion.tmall.service.UserService;
+import com.phion.tmall.util.OrderType;
 import com.phion.tmall.util.Result;
 /**
  * 由于前端业务交错
@@ -74,6 +75,7 @@ public class ForeRestfulController {
 		data.put("hotWords",hotWords);
 		return Result.success(data);
 	}
+	
 	
 	/**
 	 * 获取某个用户的推荐分类
@@ -300,18 +302,27 @@ public class ForeRestfulController {
 	     map.put("total", total);
 	     return Result.success(map);
 	 }
-
+/**
+ * 查看购物车，加载用户的订单项
+ * @param session
+ * @return
+ */
 	@GetMapping("forecart")
 	public Object cart(HttpSession session) {
 	    User user =(User)  session.getAttribute("user");
-	    System.out.println(user);
+	    //System.out.println(user);
 	    List<OrderItem> ois = orderItemService.listByUser(user);
 	    productImageService.setFirstProdutImagesOnOrderItems(ois);
 	    Map<String,Object> map = new HashMap<>();
 	    map.put("orderItems", ois);
 	    return Result.success(map);
 	}
-	
+	/**
+	 * 删除订单项
+	 * @param session
+	 * @param oiid
+	 * @return
+	 */
 	@GetMapping("foredeleteOrderItem")
 	public Object deleteOrderItem(HttpSession session,int oiid) {
 		User user =(User)  session.getAttribute("user");
@@ -320,5 +331,59 @@ public class ForeRestfulController {
 	    orderItemService.delete(oiid);
 	    return Result.success();
 	}
+	
+	/**
+	 * 修改订单项
+	 * @param session
+	 * @param pid
+	 * @param num
+	 * @return
+	 */
+	@GetMapping("forechangeOrderItem")
+	public Object changeOrderItem( HttpSession session, int pid, int num) {
+	    User user =(User)  session.getAttribute("user");
+	    if(null==user)
+	        return Result.fail("未登录");
+	 
+	    List<OrderItem> ois = orderItemService.listByUser(user);
+	    for (OrderItem oi : ois) {
+	        if(oi.getProduct().getId()==pid){
+	            oi.setNumber(num);
+	            orderItemService.update(oi);
+	            break;
+	        }
+	    }
+	    return Result.success();
+	}
 
+	/**
+	 * 创建订单
+	 * @param order
+	 * @param session
+	 * @return
+	 */
+	@PostMapping("forecreateOrder")
+	public Object createOrder(@RequestBody Order order,HttpSession session) {
+		User user =(User)  session.getAttribute("user");
+	    if(null==user)
+	        return Result.fail("未登录");
+	    
+	    //生成随机订单号= 时间+用户id
+	    String orderCode = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) 
+	    		+user.getId();
+	    
+	    order.setOrderCode(orderCode);
+	    order.setCreateDate(new Date());
+	    order.setUser(user);
+	    order.setStatus(OrderType.WAIT_PAY.toString());
+	    List<OrderItem> ois= (List<OrderItem>)  session.getAttribute("ois");
+	 
+	    float total =orderService.createOrder(order,ois);
+	 
+	    Map<String,Object> map = new HashMap<>();
+	    map.put("oid", order.getId());
+	    map.put("total", total);
+	 
+	    return Result.success(map);
+	}
 }

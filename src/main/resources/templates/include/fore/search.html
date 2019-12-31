@@ -12,7 +12,7 @@
 				<div class="searchBlow">
 				<span style="font-size:15px;">都在搜:</span>
 				<span v-for="word in hotWords">
-					<a href="#"><span>{{word}}</span></a>
+					<a :href="'search?keyword='+word"><span>{{word}}</span></a>
 				</span>
 				</div>
 			</form>

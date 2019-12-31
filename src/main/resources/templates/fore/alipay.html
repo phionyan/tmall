@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:include="include/fore/header::html('支付页')" ></head>
+     <script>
+        $(function(){
+            var oid = getUrlParms("oid");
+            var total = getUrlParms("total");
+            var data4Vue = {
+                    oid:'',
+                    total:'',
+                    user:{
+                    	id:0,
+                    	name:''
+                    }
+            };
+            //ViewModel
+            var vue = new Vue({
+                el: '#workingArea',
+                data: data4Vue,
+                methods:{
+                	init:function(){
+                		var userDiv = $("#userDiv");
+    					if(userDiv){
+    						//从session中加载用户信息
+    						this.user.name = $("#userDiv").attr("name");
+    						this.user.id = $("#userDiv").attr("uid");	
+    					}
+    					//alert(this.user.id);
+                	},
+                	confirmPay:function(){
+                		alert("付款逻辑省略,确认支付后将跳转至订单页");
+                		location.href="home";
+                	}
+                },
+                mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
+                    this.oid = oid;
+                    this.total = total;
+                    this.init();
+                }
+            });                
+        })     
+    </script>
+    <body>
+        <div id="workingArea">
+            <div th:replace="include/fore/top::html" ></div>    
+            <div th:replace="include/fore/cart/alipayPage::html" ></div>   
+            <div th:replace="include/fore/footer::html" ></div>
+        </div>
+    </body>
+</html>
