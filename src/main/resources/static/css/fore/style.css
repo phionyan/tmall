@@ -1379,4 +1379,181 @@ div.warningDiv {
 div.warningDiv {
 	color: black;
 }
+/*******************/
+/* boughtPage */
+div.boughtDiv {
+	max-width: 1013px;
+	margin: 10px auto;
+}
 
+div.orderType div.selectedOrderType {
+	border-bottom: 2px solid #C40000;
+}
+
+div.orderType div {
+	border-bottom: 2px solid #E8E8E8;
+	float: left;
+}
+
+table.orderListTitleTable {
+	border: 1px solid #E8E8E8;
+	width: 100%;
+	margin: 20px 0px;
+	background-color: #F5F5F5;
+	text-align: center;
+}
+
+table.orderListTitleTable td {
+	padding: 12px 0px;
+}
+
+div.orderType a {
+	border-right: 1px solid #E8E8E8;
+	float: left;
+	font-size: 16px;
+	font-weight: bold;
+	color: black;
+	margin-bottom: 10px;
+	padding: 0px 20px;
+	text-decoration: none;
+}
+
+div.orderType div.selectedOrderType a {
+	color: #C40000;
+}
+
+div.orderType a:hover {
+	color: #C40000;
+	text-decoration: none;
+}
+
+div.orderTypeLastOne {
+	overflow: hidden;
+	float: none !important;
+	border-bottom: 2px solid #E8E8E8;
+}
+
+a.noRightborder {
+	border-right-width: 0px !important;
+}
+
+table.orderListItemTable {
+	border: 2px solid #ECECEC;
+	width: 100%;
+	margin: 20px 0px;
+}
+
+table.orderListItemTable:hover {
+	border: 2px solid #aaa !important;
+}
+
+tr.orderListItemFirstTR {
+	background-color: #F1F1F1;
+	font-size:12px;
+}
+
+table.orderListItemTable td {
+	padding: 8px 10px;
+}
+
+div.orderItemWangWangGif {
+	display: inline-block;
+	width: 67px;
+	height: 22px;
+	background-image: url(../../img/site/wangwang.gif);
+	background-repeat: no-repeat;
+	background-color: transparent;
+	background-attachment: scroll;
+	background-position: -0px -0px;
+	position: relative;
+	top: 0px;
+	left: 2px;
+}
+
+span.orderListItemDelete {
+	display: inline-block;
+	margin: 0px 10px;
+	color: #999999;
+	font-size: 16px;
+}
+
+div.orderListItemProductLinkOutDiv {
+	position: relative;
+	height: 80px;
+	font-size:12px;
+}
+
+div.orderListItemProductLinkInnerDiv {
+	position: absolute;
+	bottom: 0px;
+}
+
+div.orderListItemProductOriginalPrice {
+	color: #999999;
+	font-size: 14px;
+}
+
+div.orderListItemProductPrice {
+	color: #3C3C3C;
+	font-size: 14px;
+}
+
+div.orderListItemProductRealPrice {
+	color: #3C3C3C;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+div.orderListItemPriceWithTransport {
+	color: #6C6C6C;
+	font-size: 12px;
+}
+
+td.orderListItemProductRealPriceTD {
+	text-align: center;
+}
+
+button.orderListItemConfirm {
+	background-color: #66B6FF;
+	border-radius: 2px;
+	color: white;
+	font-size: 12px;
+	font-weight: bold;
+	border-width: 0px;
+	padding: 6px 12px;
+}
+
+button.orderListItemConfirm:hover {
+	background-color: #118ADB;
+}
+
+button.orderListItemReview {
+	border: 1px solid #DCDCDC;
+	background-color: #fff;
+	border-radius: 2px;
+	color: #3C3C3C;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 6px 12px;
+}
+
+button.orderListItemReview:hover {
+	border-color: #C40000;
+	color: #C40000;
+}
+
+td.orderItemDeleteTD {
+	text-align: right;
+}
+
+td.orderListItemButtonTD {
+	text-align: center;
+}
+
+span.orderListItemNumber {
+	color: #3C3C3C;
+}
+
+td.orderListItemNumberTD {
+	text-align: center;
+}

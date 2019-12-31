@@ -81,4 +81,9 @@ public class ForePageController {
 	public String alipay() {
 		return "fore/alipay";
 	}
+	
+	@GetMapping("bought")
+	public String bought() {
+		return "fore/bought";
+	}
 }

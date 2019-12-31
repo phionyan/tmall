@@ -14,7 +14,7 @@
                     }
             };
             //ViewModel
-            var vue = new Vue({
+            var vm = new Vue({
                 el: '#workingArea',
                 data: data4Vue,
                 methods:{
@@ -28,8 +28,17 @@
     					//alert(this.user.id);
                 	},
                 	confirmPay:function(){
-                		alert("付款逻辑省略,确认支付后将跳转至订单页");
-                		location.href="home";
+                		alert("实际付款逻辑省略,确认支付后将生成订单并跳转至订单页");
+                		var url = "forepayed?oid="+oid;
+                		axios.get(url).then(function(response) {
+                        	var res = response.data;
+                        	if(res.code==200){
+                        		alert("支付成功!");
+                        		location.href="bought";
+                        	}else{
+                        		alert("支付失败!");
+                        	}
+                        });
                 	}
                 },
                 mounted:function(){ //mounted　表示这个 Vue 对象加载成功了

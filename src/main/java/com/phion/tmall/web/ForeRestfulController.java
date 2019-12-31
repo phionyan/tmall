@@ -386,4 +386,27 @@ public class ForeRestfulController {
 	 
 	    return Result.success(map);
 	}
+	
+	@GetMapping("forepayed")
+    public Object payed(int oid) {
+        Order order = orderService.get(oid);
+        order.setStatus(OrderType.WAIT_DELIVERY.toString());
+        order.setPayDate(new Date());
+        orderService.update(order);
+        return Result.success(order);
+    }
+	
+	
+	@GetMapping("forebought")
+	public Object bought(HttpSession session) {
+	    User user =(User)  session.getAttribute("user");
+	    if(null==user)
+	        return Result.fail("未登录");
+	    List<Order> os= orderService.listByUserWithoutDelete(user);
+	    Map data = new HashMap<>();
+	    data.put("orders", os);
+	    return Result.success(data);
+	}
+	
+	
 }

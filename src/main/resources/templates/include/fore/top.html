@@ -25,11 +25,11 @@
 			</div>
 
 			<div class="top-content-right">
-				<a>我的订单</a> <a href="cart">
+				<a href="bought">我的订单</a> <a href="cart">
 					<div style="display: inline;">
 						<span style="color: #C40000; margin: 0px;"
 							class=" glyphicon glyphicon-shopping-cart"></span> 
-							<span th:if="${session!=null&&session.cartTotalItemNumber!=null}">购物车[[${session.cartTotalItemNumber}]]件</span>
+							<span th:if="${session!=null&&session.cartTotalItemNumber!=null}">购物车<span th:text="${session.cartTotalItemNumber}"></span>件</span>
 							<span th:if="${session==null||session.cartTotalItemNumber==null}">购物车0件</span>
 						
 					</div>
