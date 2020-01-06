@@ -9,7 +9,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.math.RandomUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,6 +44,8 @@ import com.phion.tmall.util.Result;
  */
 @RestController
 public class ForeRestfulController {
+	
+	private final static Logger logger  = LoggerFactory.getLogger(ForeRestfulController.class);
 	
 	@Autowired CategoryService categoryService;
 	
@@ -183,22 +186,57 @@ public class ForeRestfulController {
 		4. 返回这个产品集合
 	 */
 	@GetMapping("foresearch")
-	public Object search( String keyword){
-	    if(null==keyword)
-	        keyword = "";
-	    
-	    List<Product> ps= productService.search(keyword,0,20);
-	    productImageService.setFirstProdutImages(ps);
-	    productService.setSaleAndReviewNumber(ps);
-	    return ps;
+	public Object search( String keyword,String type){
+		//System.err.println("--forsearch------");
+		keyword="%"+keyword+"%";
+		List<Product> ps = searchProducts(keyword,type,0);
+		//System.err.println("product: "+ps.get(0));
+		return Result.success(ps);
 	}
 	
+	
+	private List<Product> searchProducts(String keyword,String type,int cid) {
+		logger.info("searchProducts----------keyword："+keyword+"\t"+"type:"+type+"\t"+"cid:"+cid);
+		List<Product> ps = null;
+		if(type!=null){
+            switch(type){
+                case "review":
+                	ps = productService.searchByReviewCountDown(keyword,cid);
+                    break;
+                case "date" :
+                	ps = productService.searchNewProducts(keyword,cid);
+                    break;
+
+                case "saleCount" :
+                	ps = productService.searchBySaleCountDown(keyword,cid);
+                    break;
+
+                case "priceUp":
+                	ps = productService.searchByPrice(type, keyword,cid);
+                	//System.out.println("priceUp");
+                    break;
+                case "priceDown":
+                	ps = productService.searchByPrice(type, keyword,cid);
+                	//System.out.println("priceDown");
+                    break;
+                case "all":
+                	ps = productService.searchAllProducts(keyword,cid);
+                    break;
+            }
+        }
+		productImageService.setFirstProdutImages(ps);
+		return ps;
+	}
+	
+	/**
+	 * 根据分类查询产品
+	 * @param cid
+	 * @return
+	 */
 	@GetMapping("/foreCategory/{cid}")
-	public Object searchCategory( @PathVariable(name="cid")int cid){
-		List<Product> ps= productService.searchCategory(cid,0,20);
-	    productImageService.setFirstProdutImages(ps);
-	    productService.setSaleAndReviewNumber(ps);
-	    return ps;
+	public Object searchCategory( @PathVariable(name="cid")int cid,String type){
+		List<Product> ps= searchProducts("%%", type, cid);
+	    return Result.success(ps);
 	}
 	/**
 	 * 如果有订单项id，则判断为已生成订单购买；如果没有，则执行加入购物车操作
@@ -358,6 +396,8 @@ public class ForeRestfulController {
 
 	/**
 	 * 创建订单
+	 * 以时间+用户id生成唯一的订单编码
+	 * 
 	 * @param order
 	 * @param session
 	 * @return
@@ -386,7 +426,11 @@ public class ForeRestfulController {
 	 
 	    return Result.success(map);
 	}
-	
+	/**
+	 * 支付逻辑，这里简单的更改订单状态
+	 * @param oid
+	 * @return
+	 */
 	@GetMapping("forepayed")
     public Object payed(int oid) {
         Order order = orderService.get(oid);
@@ -396,7 +440,12 @@ public class ForeRestfulController {
         return Result.success(order);
     }
 	
-	
+	/**
+	 * 订单页数据
+	 * 查出所有该用户未删除的订单（状态不为删除）并返回
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("forebought")
 	public Object bought(HttpSession session) {
 	    User user =(User)  session.getAttribute("user");
@@ -408,5 +457,36 @@ public class ForeRestfulController {
 	    return Result.success(data);
 	}
 	
-	
+	/**
+	 * 确认付款
+	 * 1、找到订单
+	 * 2、将订单项信息填充到订单内
+	 * 3、计算订单总价
+	 * 4、返回订单信息
+	 * @param oid
+	 * @return
+	 */
+	@GetMapping("foreconfirmPay")
+    public Object confirmPay(int oid) {
+        Order order = orderService.get(oid);
+        orderItemService.fill(order);
+        orderService.setTotalPrice(order);
+        return Result.success(order);
+    }
+	/**
+	 * 确认收货----》即同意支付宝将钱付给商家
+	 * 找到订单，修改订单状态，修改支付日期
+	 * @param oid
+	 * @return
+	 */
+	@GetMapping("foreorderConfirmed")
+	public Object orderConfirmed( int oid) {
+	    Order order = orderService.get(oid);
+	    if(order.getConfirmDate()==null) {
+	    	order.setStatus(OrderType.WAIT_REVIEW.toString());
+		    order.setConfirmDate(new Date());
+		    orderService.update(order);
+	    }
+	    return Result.success();
+	}
 }

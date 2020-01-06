@@ -60,6 +60,7 @@ public class ProductImageService {
 	 * @param products
 	 */
 	public void setFirstProdutImages(List<Product> products) {
+		if(products==null) return;
 		for (Product product : products)
 			setFirstProdutImage(product);
 	}

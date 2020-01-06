@@ -7,17 +7,25 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.phion.tmall.Application;
+import com.phion.tmall.dao.ProductDAO;
 import com.phion.tmall.pojo.Category;
 import com.phion.tmall.pojo.Product;
+import com.phion.tmall.util.Result;
+import com.phion.tmall.web.ForeRestfulController;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 public class ProductTest {
 
 	@Autowired ProductService productService;
+	@Autowired ProductDAO productDAO;
+	@Autowired ForeRestfulController foreRestfulController;
 	
 	@Test
 	public void list() {
@@ -54,5 +62,47 @@ public class ProductTest {
 		for(Product p : ps) {
 			System.out.println(p);
 		}
+	}
+	
+	@Test
+	public void testOrder() {
+		//List<Product> products = null;
+		List<Product> products =  (List<Product>) ((Result)foreRestfulController.search( "产",new String("priceUp"))).getData();
+		for(Product product : products) {
+			System.err.println("getPromotePrice:   "+product.getPromotePrice());
+		}
+		System.out.println();
+		products =  (List<Product>) ((Result)foreRestfulController.search("产",new String("priceDown"))).getData();
+		for(Product product : products) {
+			System.err.println("getPromotePrice:   "+product.getPromotePrice());
+		}
+		/*System.out.println();
+		products =  productService.searchByReviewCountDown("",0);
+		for(Product product : products) {
+			System.out.println(product.getReviewCount());
+		}*/
+		/*System.out.println();
+		products =  productService.searchBySaleCountDown("%%",12);
+		for(Product product : products) {
+			System.out.println(product.getSaleCount());
+		}*/
+		/*
+		System.out.println();
+		products =  productService.searchNewProducts("");
+		for(Product product : products) {
+			System.out.println(product.getCreateDate());
+		}*/
+		/*System.out.println();
+		products =  productService.searchAllProducts("%奶%",0);
+		for(Product product : products) {
+			System.out.println(product.getName());
+		}*/
+		
+		/*Sort sort = new Sort(Sort.Direction.DESC, "id");
+		Pageable pageable = new PageRequest(0, 20, sort);
+		List<Product> ps = null;
+		
+		ps = productDAO.findByNameLike("%%", pageable);*/
+		
 	}
 }

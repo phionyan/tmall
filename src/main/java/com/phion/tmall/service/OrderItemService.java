@@ -56,7 +56,7 @@ public class OrderItemService {
 		}
 	}
 
-	private void fill(Order order) {
+	public void fill(Order order) {
 		List<OrderItem> orderItems = listByOrder(order);
 		float totalPrice = 0;
 		int totalNumber = 0;

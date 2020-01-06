@@ -70,8 +70,21 @@
         return (((sign)?'':'-') + num + '.' + cents);
     }
 	
+	Vue.filter("subStringFilter", function(value, start, end){
+        if (!value)
+            return '';
+        return value.substring(start,end);
+    });
+
     Vue.filter("formatMoneyFilter", function(value){
         return formatMoney(value);
+    });
+
+    Vue.filter('formatDateFilter', function (value, formatString) {
+        if(null==value)
+            return "";
+        formatString = formatString || 'YYYY-MM-DD HH:mm:ss';
+        return moment(value).format(formatString);
     });
     
     

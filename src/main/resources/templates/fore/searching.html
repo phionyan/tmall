@@ -8,10 +8,13 @@
                     uri:'foresearch',
                     products:[],
                     user:{
-                    	id:null,
+                    	id:0,
     					name:""
                     },
-                    hotWords:[]
+                    hotWords:[],
+                    keyword:'',
+                    priceType:"priceUp",
+                    
             };
             //ViewModel
             var vm = new Vue({
@@ -21,7 +24,9 @@
                     this.init();
                 },       
                 methods: {
-                	init(){
+                	init:function(){
+                		this.keyword=keyword;
+                		
                 		var searchInput = $(".searchInput");
                 		searchInput.val(keyword)
                 		
@@ -39,10 +44,21 @@
 							vm.hotWords = res.data.hotWords;
 						});
                 		
-						url =  this.uri+"?keyword="+keyword;
+						url =  this.uri+"?keyword="+keyword+"&type=all";
                         axios.get(url).then(function(response) {
-                        	 vm.products = response.data;
-                             
+                        	var res = response.data;
+                        	vm.products = res.data;
+                        });
+                    },
+                    priceSort:function(){
+                    	this.priceType = this.priceType=="priceUp"?"priceDown":"priceUp";
+                    	vm.sort(this.priceType);
+                    },
+                    sort:function(type){
+                    	var url = "foresearch?keyword="+this.keyword+"&type="+type;
+                        axios.get(url).then(function(response){
+                        	var res = response.data;
+                        	 vm.products = res.data;	
                         });
                     }
                 }

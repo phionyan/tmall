@@ -801,16 +801,21 @@ img.loginBackgroundImg {
 	background-color: white;
 	margin: 5px;
 	float: left;
-	border: 3px solid red;
+	border: 3px solid white;
 }
 
-.productInfo {
+/* .productInfo {
 	font-size: 12px;
 	font-family: Arial;
 	border-top: solid 1px #EEEEEE;
 	color: #999999;
 	float: left;
 	margin: 12px 5px;
+} */
+
+.productInfo:hover {
+	
+	border: 3px solid red;
 }
 
 span .monthDeal, .productReview {
@@ -1556,4 +1561,559 @@ span.orderListItemNumber {
 
 td.orderListItemNumberTD {
 	text-align: center;
+}
+/*****************************/
+/* 其他 */
+div.confirmPayPageDiv {
+	max-width: 1013px;
+	margin: 10px auto;
+}
+
+div.confirmPayImageDiv {
+	margin: 40px auto 80px auto;
+	width: 900px;
+	position: relative;
+}
+
+div.confirmPayImageDiv div {
+	color: #999999;
+}
+
+div.confirmPayTime1 {
+	position: absolute;
+	top: 100px;
+	left: -20px;
+}
+
+div.confirmPayTime2 {
+	position: absolute;
+	top: 100px;
+	left: 190px;
+}
+
+div.confirmPayTime3 {
+	position: absolute;
+	top: 100px;
+	left: 400px;
+}
+
+div.confirmPayOrderInfoText {
+	margin: 10px 10px 0px 10px;
+	font-size: 16px;
+	font-weight: bold;
+	color: black;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #ADC8E6;
+}
+
+div.confirmPayOrderItemDiv {
+	margin: 0px 20px;
+}
+
+div.confirmPayOrderItemText {
+	margin: 20px 10px;
+	font-size: 14px;
+	font-weight: bold;
+	color: black;
+}
+
+table.confirmPayOrderItemTable thead {
+	background-color: #E8F2FF;
+	height: 33px;
+}
+
+table.confirmPayOrderItemTable tr {
+	border: 1px solid #DDDDDD;
+}
+
+table.confirmPayOrderItemTable {
+	border: 1px solid #DDDDDD;
+	width: 100%;
+}
+
+span.conformPayProductPrice {
+	font-size: 18px;
+	font-weight: bold;
+	color: #666666;
+}
+
+table.confirmPayOrderItemTable th, table.confirmPayOrderItemTable td {
+	text-align: center;
+}
+
+table.confirmPayOrderItemTable td {
+	padding: 20px;
+}
+
+td.confirmPayOrderItemProductLink {
+	text-align: left !important;
+}
+
+div.confirmPayOrderItemText {
+	color: black;
+	font-weight: normal;
+}
+
+span.confirmPayOrderItemSumPrice {
+	color: #C40000;
+}
+
+table.confirmPayOrderDetailTable {
+	width: 100%;
+	border-top: 1px solid #DDDDDD;
+}
+
+table.confirmPayOrderDetailTable td {
+	padding: 8px;
+	color: black;
+	font-size: 14px;
+}
+
+div.confirmPayOrderDetailDiv {
+	margin: 40px;
+}
+
+span.confirmPayOrderDetailWangWangGif {
+	display: inline-block;
+	width: 67px;
+	height: 22px;
+	background-image: url(../../img/site/wangwang.gif);
+	background-repeat: no-repeat;
+	background-color: transparent;
+	background-attachment: scroll;
+	background-position: -0px -0px;
+	position: relative;
+	top: 0px;
+	left: 2px;
+}
+
+div.confirmPayButtonDiv {
+	border: 1px solid #F58B0F;
+	margin: 20px;
+}
+
+div.confirmPayWarning {
+	margin: 20px 80px;
+	font-size: 18px;
+	color: red;
+	font-weight: bold;
+}
+
+button.confirmPayButton:hover {
+	background-color: #F6AE30;
+}
+
+button.confirmPayButton {
+	margin: 20px 80px;
+	width: 67px;
+	height: 30px;
+	border: 1px solid #E67C00;
+	background-color: #F4A21D;
+	border-radius: 4px;
+	color: white;
+}
+
+div.orderFinishDiv {
+	border: 1px solid #E5E5E5;
+	padding: 40px;
+	max-width: 1013px;
+	margin: 10px auto;
+}
+
+div.orderFinishDiv span {
+	font-size: 14px;
+	color: black;
+	font-weight: bold;
+	margin-left: 20px;
+	padding-top: 20px;
+}
+
+div.reviewDiv {
+	max-width: 1013px;
+	margin: 10px auto;
+}
+
+div.reviewProductInfoRightDiv {
+	overflow: hidden;
+	border-top: 1px solid #E7E7E7;
+	padding: 30px 20px;
+}
+
+div.reviewProductInfoImg {
+	border: 1px solid #E7E7E7;
+	width: 464px;
+	text-align: center;
+	float: left;
+}
+
+div.reviewProductInfoRightText {
+	color: black;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+span.reviewProductInfoTablePrice {
+	color: #C40000;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+span.reviewProductInfoTableSellNumber {
+	color: #C40000;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+table.reviewProductInfoTable {
+	margin: 20px 10px;
+}
+
+table.reviewProductInfoTable td {
+	padding-bottom: 5px;
+	color: #999999;
+}
+
+div.reviewProductInfoRightBelowDiv {
+	border: 1px solid #F6F5F3;
+	background-color: #FDFBFA;
+	height: 166px;
+	padding: 16px 81px;
+}
+
+span.reviewProductInfoRightBelowImg {
+	background-color: white;
+	border: 1px solid #E1E1E1;
+	display: inline-block;
+	width: 23px;
+	height: 42px;
+	background-image: url(../../img/site/reviewLight.png);
+	background-repeat: no-repeat;
+	padding: 0px;
+}
+
+span.reviewProductInfoRightBelowText {
+	border: 1px solid #EFEFEF;
+	/* 	border-left-width:1px;	 */
+	display: inline-block;
+	width: 200px;
+	height: 42px;
+	padding: 4px;
+	position: relative;
+	left: -4px;
+	top: -7px;
+	color: #666666;
+}
+
+div.reviewStasticsLeft {
+	width: 180px;
+	float: left;
+}
+
+div.reviewStasticsLeftTop {
+	background-color: #C40000;
+	height: 6px;
+}
+
+div.reviewStasticsLeftContent {
+	line-height: 29px;
+	border-left: 1px solid #D5D4D4;
+	border-right: 1px solid #D5D4D4;
+	background-color: #F6F5F1;
+	text-align: center;
+	font-size: 14px;
+	color: #363535;
+	font-weight: bold;
+}
+
+span.reviewStasticsNumber {
+	color: #284CA5;
+}
+
+div.reviewStasticsLeftFoot {
+	height: 6px;
+	border-left: 1px solid #D5D4D4;
+	border-bottom: 1px solid #D5D4D4;
+	background-color: #F6F5F1;
+}
+
+div.reviewStasticsRight {
+	overflow: hidden;
+}
+
+div.reviewStasticsRightEmpty {
+	height: 35px;
+}
+
+div.reviewStasticsFoot {
+	background-color: #F6F5F1;
+	border: 1px solid #D5D4D4;
+	border-left-width: 0px;
+	height: 6px;
+}
+
+div.makeReviewDiv {
+	border: 1px solid #D1CCC8;
+	margin: 20px 0px;
+	background-color: #EFEFEF;
+}
+
+div.makeReviewText {
+	font-size: 16px;
+	color: #333333;
+	font-weight: bold;
+	margin: 20px 40px;
+}
+
+table.makeReviewTable {
+	margin: 20px 40px;
+}
+
+table.makeReviewTable td {
+	border: 1px solid #E7E7E7;
+	padding: 10px;
+	background-color: white;
+}
+
+table.makeReviewTable textarea {
+	border-width: 0px;
+	resize: none;
+	width: 420px;
+	height: 120px;
+}
+
+td.makeReviewTableFirstTD {
+	background-color: #F6F6F6;
+}
+
+div.makeReviewButtonDiv {
+	background-color: white;
+	text-align: center;
+	padding: 15px;
+}
+
+div.makeReviewButtonDiv button {
+	width: 72px;
+	height: 26px;
+	border-radius: 2px;
+	background-color: #C40000;
+	color: white;
+	border-width: 0px;
+	font-weight: bold;
+}
+
+div.registerDiv {
+	margin: 10px 20px;
+	text-align: center;
+}
+
+table.registerTable {
+	color: #3C3C3C;
+	font-size: 16px;
+	table-layout: fixed;
+	margin-top: 50px;
+}
+
+table.registerTable td {
+	/* 	border:1px dotted skyblue !important; */
+	padding: 10px 30px;
+}
+
+td.registerTableLeftTD {
+	width: 300px;
+	text-align: right;
+}
+
+td.registerTableRightTD {
+	width: 300px;
+	text-align: left;
+}
+
+td.registerTip {
+	font-weight: bold;
+}
+
+table.registerTable input {
+	border: 1px solid #DEDEDE;
+	width: 213px;
+	height: 36px;
+	font-size: 14px;
+}
+
+td.registerButtonTD {
+	text-align: center;
+}
+
+table.registerTable button {
+	width: 170px;
+	height: 36px;
+	border-radius: 2px;
+	color: white;
+	background-color: #C40000;
+	border-width: 0px;
+}
+
+table.registerTable {
+
+}
+
+div.registerSuccessDiv {
+	margin: 10px 20px;
+	background-color: #F3FDF6;
+	border: 1px solid #DEF3E6;
+	font-size: 16px;
+	color: #3C3C3C;
+	padding: 20px 130px;
+}
+
+div.categoryPageDiv {
+	max-width: 1013px;
+	margin: 10px auto;
+}
+
+div.searchResultDiv {
+	max-width: 1013px;
+	margin: 10px auto;
+	min-height: 300px;
+}
+
+div.productPageDiv {
+	max-width: 1013px;
+	margin: 10px auto;
+}
+
+div.categoryPictureInProductPageDiv {
+	width: 100%;
+	margin: 10px auto;
+	text-align: center;
+}
+
+div.reviewStasticsDiv {
+	margin-top: 20px;
+}
+
+div.registerErrorMessageDiv {
+	width: 600px;
+	margin: 0px auto;
+	height: 50px;
+	visibility: hidden;
+}
+
+td.orderItemProductInfoPartTD {
+	border-bottom: solid 1px #ECECEC;
+}
+
+td.orderItemOrderInfoPartTD {
+	border: solid 1px #ECECEC;
+}
+
+div.reviewDate {
+	width: 100px;
+}
+
+div.reviewDivlistReviewsEach div {
+	display: inline-block;
+}
+
+div.reviewDate {
+	color: #CCCCDD;
+}
+
+div.reviewContent {
+	color: #333333;
+	width: 698px;
+}
+
+div.reviewUserInfo {
+	color: #333333;
+}
+
+div.reviewDivlistReviewsEach {
+	padding: 20px;
+	border-bottom: 1px solid #ECECEC;
+}
+
+span.reviewUserInfoAnonymous {
+	color: #CCCCDD;
+	margin-left: 5px;
+}
+
+a.productLink {
+	height: 34px;
+}
+
+img.carouselImage {
+	height: 510px !important;
+}
+
+div.noMatch {
+	font-size: 20px;
+	width: 200px;
+	margin: 100px auto;
+	color: #888;
+}
+
+table.cartProductTable th.operation{
+	width:80px;
+}
+table.cartProductTable th.selectAndImage{
+	width:150px;
+}
+
+table td{
+	font-size:12px;
+}
+input{
+	outline: none;
+}
+
+div.categorySortBar {
+	background-color: #FAF9F9;
+	margin: 40px 20px 20px 20px;
+	padding: 4px;
+}
+
+
+table.categorySortBarTable td {
+	border: 1px solid #CCCCCC;
+	padding: 3px;
+	height: 23px;
+}
+
+table.categorySortBarTable {
+	border-collapse: collapse;
+	display: inline-table;
+}
+
+table.categorySortBarTable td a {
+	color: #806F66;
+	font-size:12px;
+}
+
+table.categorySortBarTable td a:hover {
+	color: #C40000;
+}
+
+table.categorySortBarTable td.grayColumn {
+	background-color: #F1EDEC;
+}
+
+table.categorySortBarTable td.priceMiddleColumn {
+	width: 10px;
+	vertical-align: middle;
+	color: #CCCCCC;
+}
+
+table.categorySortTable td:hover {
+	background-color: #F1EDEC;
+}
+
+table.categorySortBarTable span.glyphicon {
+	font-size: 10px;
+}
+
+table.categorySortBarTable input {
+	border-width: 0px;
+	height: 100%;
+	width: 50px;
+	font-size:12px;
 }

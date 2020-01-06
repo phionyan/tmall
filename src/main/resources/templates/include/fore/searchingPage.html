@@ -1,9 +1,43 @@
 <div class th:fragment="html">
-    
- 
-    <div id="searchResult">
-        <div class="searchResultDiv">
-            <div th:replace="include/fore/productsBySearch::html" ></div>  
-        </div>
-    </div>
+
+
+	<div id="searchResult">
+		<div class="categorySortBar" style="width:1023px;margin:0 auto;">
+			<table class="categorySortBarTable categorySortTable">
+				<tbody>
+					<tr>
+						<td class="grayColumn">
+						<a href="#" @click="sort('all')">综合<span
+								class="glyphicon glyphicon-arrow-down"></span></a></td>
+						<td><a href="#" @click="sort('review')">人气<span
+								class="glyphicon glyphicon-arrow-down"></span></a></td>
+						<td><a href="#" @click="sort('date')">新品<span
+								class="glyphicon glyphicon-arrow-down"></span></a></td>
+						<td><a href="#" @click="sort('saleCount')">销量<span
+								class="glyphicon glyphicon-arrow-down"></span></a></td>
+						<td><a href="#" @click="priceSort()">价格<span
+								class="glyphicon glyphicon-resize-vertical"></span></a></td>
+					</tr>
+				</tbody>
+			</table>
+
+
+
+			<table class="categorySortBarTable">
+				<tbody>
+					<tr>
+						<td><input class="sortBarPrice beginPrice" type="text"
+							placeholder="请输入"></td>
+						<td class="grayColumn priceMiddleColumn">-</td>
+						<td><input class="sortBarPrice endPrice" type="text"
+							placeholder="请输入"></td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+		<div class="searchResultDiv">
+			<div th:replace="include/fore/productsBySearch::html"></div>
+		</div>
+	</div>
 </div>
