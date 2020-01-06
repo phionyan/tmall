@@ -12,7 +12,8 @@ import com.phion.tmall.config.ResourceConfigAdapter;
 public class FileUtil {
 	
 	public static String getResourcesPath() {
-		String path = System.getProperty("user.dir")+"\\src\\main\\resources\\";
+		String fs = File.separator;
+		String path = System.getProperty("user.dir")+fs+"src"+fs+"main"+fs+"resources"+fs;
 		return path;
 	}
 	

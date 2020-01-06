@@ -27,6 +27,11 @@ public class LoginInterceptor implements HandlerInterceptor {
 				//需要权限的界面
 				"buy",
 				"cart",
+				"alipay",
+				"bought",
+				"confirmPay",
+				"orderConfirmed",
+				"review",
 				
 				//需要权限的后台操作
 				"forebuyone",
@@ -34,7 +39,15 @@ public class LoginInterceptor implements HandlerInterceptor {
                 "forecart",
                 "forechangeOrderItem",
                 "foredeleteOrderItem",
-                "forecreateOrder"
+                "forecreateOrder",
+                "forepayed",
+                "forebought",
+                "foreconfirmPay",
+                "foreorderConfirmed",
+                "foredeleteOrder",
+                "forereview",
+                "foredoreview",
+                
 		};
 		String uri = request.getRequestURI();
 		uri = StringUtils.remove(uri, contextPath+"/");
