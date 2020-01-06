@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head th:include="include/fore/header::html('订单页')" ></head>
-    <script>
+<head th:include="include/fore/header::html('订单页')"></head>
+<script>
         $(function(){
             var data4Vue = {
                     uri:'forebought',
@@ -61,40 +61,41 @@
                 $("div.orderType div").removeClass("selectedOrderType");
                 $(this).parent("div").addClass("selectedOrderType");
             });
-             
-            $("a.deleteOrderLink").click(function(){
-                deleteOrderid = $(this).attr("oid");
-                deleteOrder = false;
-                $("#deleteConfirmModal").modal("show");
+            $("body").on("click", "a.deleteOrderLink",function(){
+        		deleteOrder = false;
+                var oid = $(this).attr("oid")
+                deleteOrderid = oid;
+                $("#deleteConfirmModal").modal('show');
             });
-             
-            $("button.deleteConfirmButton").click(function(){
-                deleteOrder = true;
+            $("body").on("click", "button.deleteConfirmButton",function(){
+            	deleteOrder = true;
                 $("#deleteConfirmModal").modal('hide');
             });
              
             $('#deleteConfirmModal').on('hidden.bs.modal', function (e) {
                 if(deleteOrder){
-                    var uri = "foredeleteOrder?oid="+deleteOrderid;
-                    axios.put(uri).then(function(response){
-                        if(0==response.data.code){
-                            $("table.orderListItemTable[oid="+deleteOrderid+"]").hide();
-                        }
+                     
+                    var url = "foredeleteOrder?oid="+deleteOrderid;
+                    axios.get(url).then(function(response){
+                    	var res = response.data;
+                        if(200==res.code){
+                        	$("table.orderListItemTable[oid="+deleteOrderid+"]").remove();
+                        }	
                         else{
                             location.href="login";
-                        }                      
+                        }
                     });
                 }
-            })     
+            })  
         }
     </script>
-    <body>
-        <div id="workingArea">
-            <div th:replace="include/fore/top::html" ></div>   
-            <div th:replace="include/fore/simpleSearch::html" ></div>  
-            <div th:replace="include/fore/cart/boughtPage::html" ></div>   
-            <div th:replace="include/fore/modal4deleteConfirm::html" ></div>
-            <div th:replace="include/fore/footer::html" ></div>
-        </div>
-    </body>
+<body>
+	<div id="workingArea">
+		<div th:replace="include/fore/top::html"></div>
+		<div th:replace="include/fore/simpleSearch::html"></div>
+		<div th:replace="include/fore/cart/boughtPage::html"></div>
+		<div th:replace="include/fore/modal4deleteConfirm::html"></div>
+		<div th:replace="include/fore/footer::html"></div>
+	</div>
+</body>
 </html>

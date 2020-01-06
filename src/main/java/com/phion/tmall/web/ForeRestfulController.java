@@ -489,4 +489,72 @@ public class ForeRestfulController {
 	    }
 	    return Result.success();
 	}
+	
+	/**
+	 * 删除订单
+	 * @param session
+	 * @param oiid
+	 * @return
+	 */
+	@GetMapping("foredeleteOrder")
+	public Object deleteOrder(HttpSession session,int oid) {
+		User user =(User)  session.getAttribute("user");
+	    if(null==user)
+	        return Result.fail("未登录");
+	    Order order = orderService.get(oid);
+	    order.setStatus(OrderType.DELETE.toString());
+	    orderService.update(order);
+	    return Result.success();
+	}
+	/**
+	 * 评价页面，由于前期设计的时候没设计好，现在不好实现评价的逻辑，暂时对每个订单的第一个订单项进行评价
+	 * 1、找到订单
+	 * 2、找到第一个订单项
+	 * 3、找到这个产品的所有评价
+	 * 4、返回评价信息
+	 * @param oid
+	 * @return
+	 */
+	@GetMapping("forereview")
+	public Object review(int oid) {
+	    Order order = orderService.get(oid);
+	    orderItemService.fill(order);
+	    Product product = order.getOrderItems().get(0).getProduct();
+	    
+	    List<Review> reviews = reviewService.list(product);
+	    productService.setSaleAndReviewNumber(product);
+	    Map<String,Object> map = new HashMap<>();
+	    map.put("product", product);
+	    map.put("order", order);
+	    map.put("reviews", reviews);
+	 
+	    return Result.success(map);
+	}
+	/**
+	 * 提交评价
+	 * @param session
+	 * @param oid
+	 * @param pid
+	 * @param content
+	 * @return
+	 */
+	@PostMapping("foredoreview")
+	public Object doreview( HttpSession session,int oid,int pid,String content) {
+	    //更新订单状态
+		Order o = orderService.get(oid);
+	    o.setStatus(OrderType.FINISH.toString());
+	    orderService.update(o);
+	    //为产品设置评价
+	    Product p = productService.get(pid);
+	    content = HtmlUtils.htmlEscape(content);
+	    //为评价关联用户
+	    User user =(User)  session.getAttribute("user");
+	    Review review = new Review();
+	    review.setContent(content);
+	    review.setProduct(p);
+	    review.setCreateDate(new Date());
+	    review.setUser(user);
+	    reviewService.add(review);
+	    return Result.success();
+	}
 }
