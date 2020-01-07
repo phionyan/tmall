@@ -29,8 +29,8 @@ Java后端学完了，总觉得应该总结下，对程序员来说，最好的�
 * 产品管理界面及CRUD         :full_moon:
 * 用户管理界面及CRUD         :full_moon:
 * 订单管理界面及CRUD         :full_moon:
-* 前端                       :new_moon:
-
+* 前端                      :full_moon:
+截止至1月17日，前后端基本完成。
 ### 阶段二:
 
 ### 阶段三:
