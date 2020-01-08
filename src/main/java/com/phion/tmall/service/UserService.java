@@ -61,7 +61,7 @@ public class UserService {
 	 * @param name
 	 * @return
 	 */
-	private User getByName(String name) {
+	public User getByName(String name) {
 		User user = userDAO.findByName(name);
 		return user;
 	}
