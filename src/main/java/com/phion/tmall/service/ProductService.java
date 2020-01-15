@@ -5,6 +5,9 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,13 +24,15 @@ import com.phion.tmall.util.Page4Navigator;
 
 
 @Service
+@CacheConfig(cacheNames="products")
 public class ProductService {
 
 	@Autowired ProductDAO productDAO;
 	@Autowired CategoryService categoryService;
 	@Autowired ReviewService reviewService;
 	@Autowired OrderItemService orderItemService;
-	
+
+	@Cacheable(key="'products-page-'+#cid+ '-' + #start+ '-' + #size")
 	public Page4Navigator<Product> list(int cid,int start,int size){
 		Category category = categoryService.get(cid);
 		
@@ -35,19 +40,25 @@ public class ProductService {
 		Pageable pageable = new PageRequest(start, size,sort);//小心不要用awt的peageable
 		Page pageFromJPA = productDAO.findByCategory(category, pageable);
 		
-		return new Page4Navigator<>(pageFromJPA);
+		return new Page4Navigator<Product>(pageFromJPA);
 	}
 	
+	@CacheEvict(allEntries=true)
 	public void add(Product product) {
 		productDAO.save(product);
 	}
 
+	@CacheEvict(allEntries=true)
 	public void delete(int id) {
 		productDAO.delete(id);
 	}
+	
+	@CacheEvict(allEntries=true)
 	public void update(Product product) {
 		productDAO.save(product);
 	}
+
+	@Cacheable(key="'products-one-'+ #id")
 	public Product get(int id) {
 		return productDAO.findOne(id);
 	}
@@ -57,6 +68,8 @@ public class ProductService {
 	/**
 	 * 测试用
 	 */
+
+	@Cacheable(key="'products-all'")
 	public List<Product> list(){
 		return productDAO.findAll();
 	}
@@ -78,6 +91,7 @@ public class ProductService {
 	 * @param j
 	 * @return
 	 */
+	@Cacheable(key="'products-search-' +#keyword+ '-' +#start+ '-' +#size")
 	public List<Product> search(String keyword, int start, int size) {
 		Sort sort = new Sort(Sort.Direction.DESC, "id");
         Pageable pageable = new PageRequest(start, size, sort);
@@ -92,6 +106,7 @@ public class ProductService {
 	 * @param size
 	 * @return
 	 */
+	@Cacheable(key="'products-searchCategory-' +#cid+ '-' +#start+ '-' +#size")
 	public List<Product> searchCategory(int cid, int start, int size) {
 		Category category = new Category();
 		category.setId(cid);
@@ -104,6 +119,7 @@ public class ProductService {
 	 * 按价格模糊查询产品
 	 * @return
 	 */
+	@Cacheable(key="'products-searchByPrice-' +#type+ '-' +#keyword+ '-' +#cid")
 	public List<Product> searchByPrice(String type,String keyword, int cid){
 		Sort sort = null;
 		/*System.err.println("type addr:"+System.identityHashCode(type));
@@ -143,6 +159,7 @@ public class ProductService {
 	 * @param cid 
 	 * @return
 	 */
+	@Cacheable(key="'products-searchByReviewCountDown-' +#keyword+ '-' +#cid")
 	public List<Product> searchByReviewCountDown(String keyword, int cid){
 		Sort sort = new Sort(Sort.Direction.DESC, "id");
 		Pageable pageable = new PageRequest(0, 20, sort);
@@ -172,6 +189,7 @@ public class ProductService {
 	 *3、根据销量降序排序
 	 * @return
 	 */
+	@Cacheable(key="'products-searchBySaleCountDown-' +#keyword+ '-' +#cid")
 	public List<Product> searchBySaleCountDown(String keyword,int cid){
 		Sort sort = new Sort(Sort.Direction.DESC, "id");
 		Pageable pageable = new PageRequest(0, 20, sort);
@@ -199,6 +217,7 @@ public class ProductService {
 	 * 按商品上架日期升序查询产品
 	 * @return
 	 */
+	@Cacheable(key="'products-searchNewProducts-' +#keyword+ '-' +#cid")
 	public List<Product> searchNewProducts(String keyword,int cid){
 		Sort sort = new Sort(Sort.Direction.DESC, "createDate");
 		Pageable pageable = new PageRequest(0, 20, sort);
@@ -214,6 +233,7 @@ public class ProductService {
 	 * 按照综合属性查找排序商品
 	 * @return
 	 */
+	@Cacheable(key="'products-searchAllProducts-' +#keyword+ '-' +#cid")
 	public List<Product> searchAllProducts(String keyword,int cid){
 		Sort sort = new Sort(Sort.Direction.DESC, "id");
 		Pageable pageable = new PageRequest(0, 20, sort);

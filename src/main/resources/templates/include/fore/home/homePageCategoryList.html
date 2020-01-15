@@ -1,4 +1,4 @@
-<div th:fragment="html">
+<div th:fragment="html" >
 	<div class="homepage-category-list" style="margin-top:50px;">
 		<div class="category-list-content" style="padding-top:25px;">
 			<div class="category-list-content-row" v-for="c,cindex in categories">
@@ -8,16 +8,16 @@
 				</div>
 				<div class="category-list-eachCategory"
 					v-for="p ,pindex in c.products" v-if="pindex<=4">
-					<div class="product-of-categoty-list">
-						<a :href="'foreproduct?pid='+p.id"> <img width="100%"
+					<div class="product-of-categoty-list" style="height:285px">
+						<a :href="'foreproduct?pid='+p.id" > <img width="100%"
 							:src="'img/productBrief_middle/'+p.firstProductImage.id+'.jpg'" />
 						</a>
 						<div class="productItemDesc" style="width: 90%; margin: 0 auto; margin-top: 15px;">
-							<span>{{p.name}} </span>
+							<span style="color: #666666;font-size: 12px;">{{p.name}} </span>
 						</div>
 						<div
 							style="width: 90%; margin: 0 auto; margin-top: 10px; font-size: 18px; color: #FF003A;">
-							<span> {{p.promotePrice|formatMoneyFilter}} 元 </span>
+							<span> {{p.promotePrice|formatMoneyFilter}}  </span>
 						</div>
 					</div>
 					<div></div>

@@ -1,5 +1,7 @@
 package com.phion.tmall.interceptor;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,12 +17,13 @@ import com.phion.tmall.pojo.User;
 public class LoginInterceptor implements HandlerInterceptor {
 	
 	private static final Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);
+	static AtomicInteger count = new AtomicInteger(0);
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
-		logger.info("-----------prehandle-------------");
+		logger.info("count = "+count.getAndIncrement());
 		HttpSession session = request.getSession();
 		String contextPath = session.getServletContext().getContextPath();
 		String[] requireAuthPages = new String[]{

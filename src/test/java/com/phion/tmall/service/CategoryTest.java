@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.phion.tmall.Application;
 import com.phion.tmall.pojo.Category;
+import com.phion.tmall.pojo.Order;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
@@ -20,10 +21,16 @@ public class CategoryTest {
 	
 	@Test
 	public void list() {
-		List<Category> categories = categoryService.list();
+		Category p = categoryService.get(1);
+		System.out.println(p);
+	}
+	
+	/*@Test
+	public void list() {
+		List<Category> categories = categoryService.listRecommend(1);
 		Iterator<Category> iterator = categories.iterator();
 		while(iterator.hasNext()) {
 			System.out.println(iterator.next());
 		}
-	}
+	}*/
 }

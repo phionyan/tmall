@@ -35,6 +35,11 @@ public class Page4Navigator<T> {
 	boolean isHasNext;
 
 	boolean isHasPrevious;
+	
+	
+	public Page4Navigator(){
+		
+	}
 
 	public Page4Navigator(Page<T> pageFromJPA) {
 		this.pageFromJPA = pageFromJPA;

@@ -132,7 +132,7 @@ public class ForeRestfulController {
 	 */
 	@PostMapping("/user_login")
 	public Object userLogin(@RequestBody User user,HttpSession session) {
-	    logger.info("userLogin");
+	    //logger.info("userLogin");
 	    String name = user.getName();
 		user.setName(HtmlUtils.htmlEscape(name));
 	 

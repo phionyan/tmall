@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -15,30 +18,35 @@ import com.phion.tmall.pojo.OrderItem;
 import com.phion.tmall.pojo.User;
 
 @Service
+@CacheConfig(cacheNames="orderItems")
 public class OrderItemService {
 	
 	@Autowired OrderItemDAO orderItemDAO;
 	
 	@Autowired ProductImageService productImageService;
 	
+	@Cacheable(key="orderItems-all")
 	public List<OrderItem> list(){
 		Sort sort = new Sort(Sort.Direction.ASC,"id");
 		return orderItemDAO.findAll(sort);
 	}
-	
+
 	public void add(OrderItem orderItem) {
 		orderItemDAO.save(orderItem);
 	}
 	
+	@CacheEvict(key="'orderItems-one-'+#id")
 	public void delete(int id) {
 		orderItemDAO.delete(id);
 	}
 	
+	@Cacheable(key="'orderItems-one-'+#id")
 	public OrderItem get(int id) {
 		OrderItem orderItem= orderItemDAO.findOne(id);
 		return orderItem;
 	}
-	
+
+	@CacheEvict(key="'orderItems-one-'+#id")
 	public void update(OrderItem orderItem) {
 		orderItemDAO.save(orderItem);
 	}
@@ -73,11 +81,16 @@ public class OrderItemService {
 		order.setTotalNumber(totalNumber);		
 		order.setOrderItems(orderItems);
 	}
-
+	
+	@Cacheable(key="'orderItems-listByOrder-'+#order.id")
 	private List<OrderItem> listByOrder(Order order) {
 		return orderItemDAO.findByOrderOrderByIdDesc(order);
 	}
-	
+	/**
+	 *这个方法不出需要缓存，它调用底下的缓存
+	 * @param oiids
+	 * @return
+	 */
 	public Map<String,Object> listOrderItemsInfo(String[] oiids){
 		Map<String,Object> orderItemsInfo = new HashMap<String, Object>();
 		float total = 0;
@@ -94,6 +107,7 @@ public class OrderItemService {
 		return orderItemsInfo;
 	}
 
+	@Cacheable(key="'orderItems-listByUser-'+#user.id")
 	public List<OrderItem> listByUser(User user) {
 		
 		return orderItemDAO.findByUserAndOrderIsNull(user);

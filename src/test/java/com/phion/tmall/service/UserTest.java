@@ -21,7 +21,7 @@ public class UserTest {
 		System.out.println(user.getAnonymousName());
 	}
 	
-	
+	/*
 	@Test
 	public void add() {
 		for(int i = 0 ; i< 10 ; i++) {
@@ -31,5 +31,5 @@ public class UserTest {
 			userService.add(user);
 		}
 		System.out.println("-------插入完成------------");
-	}
+	}*/
 }

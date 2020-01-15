@@ -3,6 +3,9 @@ package com.phion.tmall.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +22,7 @@ import com.phion.tmall.util.OrderType;
 import com.phion.tmall.util.Page4Navigator;
 
 @Service
+@CacheConfig(cacheNames="orders")
 public class OrderService {
 
 	@Autowired
@@ -26,6 +30,7 @@ public class OrderService {
 	@Autowired
 	OrderItemService orderItemService;
 
+	@Cacheable(key="'orders-page-'+#start+ '-' + #size")
 	public Page4Navigator<Order> list(int start, int size) {
 		Sort sort = new Sort(Sort.Direction.DESC, "id");
 		Pageable pageable = new PageRequest(start, size, sort);
@@ -50,24 +55,30 @@ public class OrderService {
 		return total;
 	}
 
+	@Cacheable(key="orders-all")
 	public List<Order> list() {
 		Sort sort = new Sort(Sort.Direction.ASC, "id");
 		return orderDAO.findAll(sort);
 	}
+	
 
+	@CacheEvict(allEntries=true)
 	public void add(Order bean) {
 		orderDAO.save(bean);
 	}
 
+	@CacheEvict(allEntries=true)
 	public void delete(int id) {
 		orderDAO.delete(id);
 	}
 
+	@Cacheable(key="'orders-one-'+ #id")
 	public Order get(int id) {
 		Order order = orderDAO.findOne(id);
 		return order;
 	}
 
+	@CacheEvict(allEntries=true)
 	public void update(Order order) {
 		orderDAO.save(order);
 	}
@@ -85,6 +96,7 @@ public class OrderService {
 	 * @param user
 	 * @return
 	 */
+	@Cacheable(key="'orders-listByUserAndNotDeleted-'+user.id")
 	private List<Order> listByUserAndNotDeleted(User user) {
 		return orderDAO.findByUserAndStatusNotOrderByIdDesc(user, OrderType.DELETE.toString());
 	}

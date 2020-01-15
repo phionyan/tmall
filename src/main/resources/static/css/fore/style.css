@@ -251,6 +251,7 @@ img.catear {
 	margin-right: 15%;
 	margin-left: 15%;
 	background-color: #F5F5F5;
+	min-width:1023px;
 }
 
 .category-list-content-row {
@@ -259,6 +260,7 @@ img.catear {
 	/* border: solid 1px black; */
 	margin: 0 auto;
 	margin-top: 30px;
+	min-width:1023px;
 }
 
 .category-list-eachCategory {

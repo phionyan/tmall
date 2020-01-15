@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.phion.tmall.Application;
 import com.phion.tmall.pojo.Order;
+import com.phion.tmall.pojo.ProductImage;
 import com.phion.tmall.pojo.User;
 
 @RunWith(SpringRunner.class)
@@ -19,6 +20,12 @@ public class OrderTest {
 	@Autowired OrderService orderService;
 	
 	@Test
+	public void list() {
+		Order p = orderService.get(1);
+		System.out.println(p);
+	}
+	
+	/*@Test
 	public void test() {
 		User user = new User();
 		user.setId(33);
@@ -27,5 +34,5 @@ public class OrderTest {
 		for(Order o : orders) {
 			System.out.println(o.getId()+"\t"+o.getOrderCode()+"\t"+o.getAddress()+"\t"+o.getReceiver());
 		}
-	}
+	}*/
 }

@@ -16,6 +16,7 @@ import com.phion.tmall.Application;
 import com.phion.tmall.dao.ProductDAO;
 import com.phion.tmall.pojo.Category;
 import com.phion.tmall.pojo.Product;
+import com.phion.tmall.pojo.Property;
 import com.phion.tmall.util.Result;
 import com.phion.tmall.web.ForeRestfulController;
 
@@ -29,6 +30,12 @@ public class ProductTest {
 	
 	@Test
 	public void list() {
+		Product p =  productService.get(1);
+		System.out.println(p);
+	}
+	
+	/*//@Test
+	public void list() {
 		List<Product> products = productService.list(13, 0, 5).getContent();
 		Iterator<Product> iterator = products.iterator();
 		while(iterator.hasNext()) {
@@ -36,7 +43,7 @@ public class ProductTest {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void testsetSaleAndReviewNumber() {
 		Product p = productService.get(3);
 		productService.setSaleAndReviewNumber(p);
@@ -44,7 +51,7 @@ public class ProductTest {
 		System.out.println("over");
 	}
 	
-	@Test
+	//@Test
 	public void testsearch() {
 		//String keyword = "%' or '%1%'='%1";
 		String keyword = "产品";
@@ -54,7 +61,7 @@ public class ProductTest {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void testsearchCategory() {
 		//String keyword = "%' or '%1%'='%1";
 		String keyword = "产品";
@@ -64,7 +71,7 @@ public class ProductTest {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void testOrder() {
 		//List<Product> products = null;
 		List<Product> products =  (List<Product>) ((Result)foreRestfulController.search( "产",new String("priceUp"))).getData();
@@ -76,33 +83,33 @@ public class ProductTest {
 		for(Product product : products) {
 			System.err.println("getPromotePrice:   "+product.getPromotePrice());
 		}
-		/*System.out.println();
+		System.out.println();
 		products =  productService.searchByReviewCountDown("",0);
 		for(Product product : products) {
 			System.out.println(product.getReviewCount());
-		}*/
-		/*System.out.println();
+		}
+		System.out.println();
 		products =  productService.searchBySaleCountDown("%%",12);
 		for(Product product : products) {
 			System.out.println(product.getSaleCount());
-		}*/
-		/*
+		}
+		
 		System.out.println();
 		products =  productService.searchNewProducts("");
 		for(Product product : products) {
 			System.out.println(product.getCreateDate());
-		}*/
-		/*System.out.println();
+		}
+		System.out.println();
 		products =  productService.searchAllProducts("%奶%",0);
 		for(Product product : products) {
 			System.out.println(product.getName());
-		}*/
+		}
 		
-		/*Sort sort = new Sort(Sort.Direction.DESC, "id");
+		Sort sort = new Sort(Sort.Direction.DESC, "id");
 		Pageable pageable = new PageRequest(0, 20, sort);
 		List<Product> ps = null;
 		
-		ps = productDAO.findByNameLike("%%", pageable);*/
+		ps = productDAO.findByNameLike("%%", pageable);
 		
-	}
+	}*/
 }

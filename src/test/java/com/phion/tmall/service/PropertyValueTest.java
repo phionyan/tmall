@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.phion.tmall.Application;
 import com.phion.tmall.pojo.Product;
 import com.phion.tmall.pojo.PropertyValue;
+import com.phion.tmall.pojo.User;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
@@ -20,12 +21,18 @@ public class PropertyValueTest {
 	@Autowired PropertyValueService propertyValueService;
 	@Autowired ProductService productService;
 	
+	@Test
+	public void list() {
+		PropertyValue p = propertyValueService.get(1);
+		System.out.println(p);
+	}
+	
 	//@Test
-	public void get() {
-		/*int cid = 13;
+	/*public void get() {
+		int cid = 13;
 		List<Product> products = productService.list(cid, 0, 5).getContent();
 		System.out.println(Arrays.toString(products.toArray()));
-		Product product = products.get(0);*/
+		Product product = products.get(0);
 		List<PropertyValue> values = propertyValueService.listAll();
 		System.out.println(values.size());
 		Iterator<PropertyValue> iterator = values.iterator();
@@ -52,5 +59,5 @@ public class PropertyValueTest {
 		}
 		//查看数据库
 		get();
-	}
+	}*/
 }

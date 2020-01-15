@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.phion.tmall.Application;
+import com.phion.tmall.pojo.Order;
 import com.phion.tmall.pojo.OrderItem;
 import com.phion.tmall.pojo.User;
 
@@ -19,6 +20,12 @@ public class OrderItemTest {
 	@Autowired OrderItemService orderItemService;
 	
 	@Test
+	public void list() {
+		OrderItem p = orderItemService.get(1);
+		System.out.println(p);
+	}
+	
+/*	@Test
 	public void testList() {
 		User user = new User();
 		user.setId(33);
@@ -26,6 +33,6 @@ public class OrderItemTest {
 		for(OrderItem oi : orderItems) {
 			System.out.println(oi.getId()+"------"+oi.getProduct());
 		}
-	}
+	}*/
 	
 }

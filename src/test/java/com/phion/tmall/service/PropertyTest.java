@@ -21,7 +21,13 @@ public class PropertyTest {
 	@Autowired PropertyService propertyService;
 	
 	@Test
-	public void get() {
+	public void list() {
+		Property p =  propertyService.get(1);
+		System.out.println(p);
+	}
+	
+	//@Test
+	/*public void get() {
 		int cid = 13;
 		List<Property> properties = propertyService.list(cid,0,5).getContent();
 		Iterator<Property> iterator = properties.iterator();
@@ -29,5 +35,5 @@ public class PropertyTest {
 			System.out.println(iterator.next());
 		}
 		
-	}
+	}*/
 }
